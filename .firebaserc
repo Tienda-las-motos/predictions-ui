@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "sales-predict": {
+      "hosting": {
+        "predictions-UI": [
+          "sales-predict"
+        ]
+      }
+    }
+  }
+}
