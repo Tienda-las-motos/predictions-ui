@@ -1,0 +1,25 @@
+<mat-drawer-container [hasBackdrop]="">
+    <mat-drawer
+        #tableDrawer
+        [position]="'push'"
+        [mode]="'side'"
+        [opened]="true"
+        class="drawer table-drawer"
+    >
+        <app-tables-drawer></app-tables-drawer>
+    </mat-drawer>
+    <mat-drawer
+        #productDrawer
+        [position]="'push'"
+        [mode]="'side'"
+        [opened]="true"
+        class="drawer product-drawer"
+    >
+        <app-products-drawer></app-products-drawer>
+    </mat-drawer>
+    <mat-drawer-content
+        class="content"
+    >
+        <app-product-view></app-product-view>
+    </mat-drawer-content>
+</mat-drawer-container>

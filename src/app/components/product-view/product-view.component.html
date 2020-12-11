@@ -1,0 +1,22 @@
+<span>
+    <mat-toolbar color="accent">
+        <span class="prod-description">
+            <span class="product_name">{{product.name}}</span>
+            <span class="time_stats">
+                Ventas registradas del {{firstDate}} al  {{lastDate}}
+            </span>
+        </span>
+    </mat-toolbar>
+</span>
+
+<nav mat-tab-nav-bar>
+    <a mat-tab-link *ngFor="let link of sections"
+        [routerLink]="[link]"
+        class="section-link"
+       (click)="activeLink = link"
+       [active]="getActiveLink() == link"> {{link}}
+    </a>
+  </nav>
+
+<router-outlet></router-outlet>
+<!-- <app-product-details></app-product-details> -->

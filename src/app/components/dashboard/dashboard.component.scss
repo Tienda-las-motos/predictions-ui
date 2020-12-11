@@ -1,0 +1,23 @@
+mat-drawer-container {
+    max-height: 93vh;
+}
+
+.drawer {
+    width: 200px;
+    background: #f0f0f0;
+}
+
+.table-drawer {
+    background: #f0f0f0;
+}
+
+.product-drawer {
+    transform: translateX(100%) !important
+}
+
+.content {
+    width: calc(100% - 400px);
+    float: right;
+    max-height: 93vh;
+    overflow: hidden;
+}

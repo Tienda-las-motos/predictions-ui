@@ -1,0 +1,139 @@
+<div class="container">
+    <div class="row">
+        <!-- TABLA UNIDADES -->
+        <div class="col s12 m6 l3">
+            <mat-card>
+                <mat-card-header>
+                    <div mat-card-avatar>
+                        <i class="fas fa-calculator fa-2x lime-text text-accent-4"></i>
+                    </div>
+                    <mat-card-title>Unidades</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>U. Vendidas</td>
+                                <td>{{product.stats.avgs.sold_units}}</td>
+                            </tr>
+                            <tr>
+                                <td>Ventas</td>
+                                <td>{{product.stats.avgs.sales_quantity}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <!-- TABLA COMPRA -->
+        <div class="col s12 m6 l3">
+            <mat-card>
+                <mat-card-header>
+                    <div mat-card-avatar>
+                        <i class="fas fa-hand-holding-usd fa-2x orange-text text-accent-3"></i>
+                    </div>
+                    <mat-card-title>Compra</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>Precio mínimo</td>
+                                <td>{{product.stats.avgs.min_purch_price}}</td>
+                            </tr>
+                            <tr>
+                                <td>Precio promedio</td>
+                                <td>{{product.stats.avgs.avg_purch_price}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <!-- TABLA VENTA -->
+        <div class="col s12 m6 l3">
+            <mat-card>
+                <mat-card-header>
+                    <div mat-card-avatar>
+                        <i class="fas fa-dollar-sign fa-2x purple-text text-accent-4"></i>
+                    </div>
+                    <mat-card-title>Venta</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>Precio máximo</td>
+                                <td>{{product.stats.avgs.max_sell_price}}</td>
+                            </tr>
+                            <tr>
+                                <td>Precio Promedio</td>
+                                <td>{{product.stats.avgs.avg_sell_price}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <!-- TABLA MARGEN -->
+        <div class="col s12 m6 l3">
+            <mat-card>
+                <mat-card-header>
+                    <div mat-card-avatar>
+                        <i class="fas fa-balance-scale fa-2x teal-text text-accent-3"></i>
+                    </div>
+                    <mat-card-title>Margen</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>Mayor margen</td>
+                                <td>{{product.stats.avgs.max_margin}}</td>
+                            </tr>
+                            <tr>
+                                <td>Promedio</td>
+                                <td>{{product.stats.avgs.avg_margin}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+
+    <!-- GRAFICA DE VENTAS -->
+    <div class="row">
+        <div class="col s12">
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>Ventas vs Costos</mat-card-title>
+                </mat-card-header>
+                <img mat-card-image src="https://storage.googleapis.com/sales-predict.appspot.com/tables/GscRwIx3AbcdcnevaZmz/product/banda_freno_del_y_tras/sales-chart.jpg" alt="Ventas vs Costos">
+            </mat-card>
+        </div>
+    </div>
+
+    <!-- DETALLES MENSUALES -->
+    <div class="row">
+        <div class="col s12">
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>Detelles mensuales</mat-card-title>
+                    <mat-card-subtitle>
+                        Genera detalles mensuales. Hacerlo te permitirá tener mejores resultados en las predicciones de tus ventas
+                    </mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                    <button mat-raised-button color="primary">Generar detalles</button>
+                    <div class="row">
+                        <div class="col s12">
+                            <p>Promedio de ventas mensuales: {{product.month_details.avgsales_per_month}}</p>
+                        </div>
+                    </div>
+                </mat-card-content>
+                <img mat-card-image src="https://storage.googleapis.com/sales-predict.appspot.com/tables/GscRwIx3AbcdcnevaZmz/product/banda_freno_del_y_tras/month_sales_normalized.jpg" alt="Detalles mensuales">
+            </mat-card>
+        </div>
+    </div>
+</div>

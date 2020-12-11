@@ -1,0 +1,24 @@
+<span class="drawer-title">
+    <mat-toolbar color="accent">
+        <span>Productos</span>
+    </mat-toolbar>
+</span>
+<div class="row select-row">
+    <div class="col s12 center">
+        <mat-select placeholder="Elige un producto" [(ngModel)]="productSelected" name="item">
+            <mat-option *ngFor="let item of productList" [value]="item.code">
+                {{item.name}}
+            </mat-option>
+        </mat-select>
+    </div>
+</div>
+<div class="row prod-row selected">
+    <div class="col s12">
+        <p>Balatas</p>
+    </div>
+</div>
+<div class="row prod-row">
+    <div class="col s12">
+        <p>Freno de disco</p>
+    </div>
+</div>
