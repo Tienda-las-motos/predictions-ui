@@ -1,5 +1,17 @@
 <span>
     <mat-toolbar color="primary">
         <span>Sales Predictions</span>
+        <span class="espacio"></span>
+        <div class="col right user_log" *ngIf="login_.user$ | async as user">
+            <mat-menu #menuProfile="matMenu">
+                <button mat-menu-item [routerLink]="['/dashboard']">Dashboard</button>
+                <button mat-menu-item (click)="login_.singOut()">Cerrar sesión</button>
+            </mat-menu>
+            
+            <div class="imgProfileContainer"
+            [matMenuTriggerFor]="menuProfile">
+                <img src="{{user.photoURL}}" alt="">
+            </div>
+        </div>
     </mat-toolbar>
 </span>

@@ -16,7 +16,7 @@ export class ProductsService {
 
     productsFS$: Observable<ProductModel[]>
     loadProduct$: Subject<string> = new Subject();
-
+    APIurl: string = 'https://sales-predict.uc.r.appspot.com/'
     constructor (
         private _http: HttpClient,
         private _cache: CacheService,
@@ -31,7 +31,7 @@ export class ProductsService {
 
 
     filterProduct(table: string, product: string): Observable<any> {
-        return this._http.get( `api/product/filter?table=${ table }&product=${ product }` )
+        return this._http.get( `${this.APIurl}api/product/filter?table=${ table }&product=${ product }` )
             .pipe(
                 tap( (response)=> console.log(response)),
                 map( ( response: ApiResponse ) => {
@@ -48,7 +48,7 @@ export class ProductsService {
 
 
     getMonthDetails( table: string, product: string ): Observable<any> {
-        return this._http.get( `api/product/month-details?table=${ table }&product=${ product }` )
+        return this._http.get( `${this.APIurl}api/product/month-details?table=${ table }&product=${ product }` )
             .pipe(
                 tap( (response)=> console.log(response)),
                 map( ( response: ApiResponse ) => {

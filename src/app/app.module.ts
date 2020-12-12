@@ -29,6 +29,8 @@ import { ProductBlankComponent } from './components/product-blank/product-blank.
 import { UploadTableComponent } from './components/tables-drawer/upload-table/upload-table.component';
 import { GdevAlertModule } from './services/alerts/gdev-alert.module';
 import { TablesComponent } from './components/tables/tables.component';
+import { GdevLoginModule } from './services/gdev-login/gdev-login.module';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
     declarations: [
@@ -45,6 +47,7 @@ import { TablesComponent } from './components/tables/tables.component';
         ProductBlankComponent,
         UploadTableComponent,
         TablesComponent,
+        LoginComponent,
     ],
     imports: [
         BrowserModule.withServerTransition({ appId: 'serverApp' }),
@@ -59,6 +62,7 @@ import { TablesComponent } from './components/tables/tables.component';
         LoadingModule,
         GdevAlertModule,
         NgxMaskModule.forRoot(),
+        GdevLoginModule
     ],
     providers: [],
     bootstrap: [AppComponent],

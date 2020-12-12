@@ -1,0 +1,51 @@
+<mat-card gdev-color [background]="background" [color]="color">
+    <mat-card-header>
+        <mat-card-title class="center">Iniciar Sesión</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="row">
+            <div class="col s12">
+                <mat-form-field appearance="outline">
+                    <mat-label>Email</mat-label>
+                    <input
+                    matInput
+                    type="text"
+                    name="email"
+                    [(ngModel)]="fields.email"
+                    >
+                </mat-form-field>
+            </div>
+
+            <div class="col s12">
+                <mat-form-field appearance="outline">
+                    <mat-label>Contraseña</mat-label>
+                    <input
+                    matInput
+                    type="text"
+                    name="password"
+                    [(ngModel)]="fields.password"
+                    [type]="hide ? 'password' : 'text'"
+                    >
+                    <mat-icon matSuffix (click)="hide = !hide">
+                        {{hide ? 'visibility_off' : 'visibility'}}
+                    </mat-icon>
+                </mat-form-field>
+            </div>
+        </div>
+    </mat-card-content>
+    <mat-card-actions style="display: flex; justify-content: center;">
+        <div class="row">
+            <div class="col s12">
+                <p><a (click)="restorePwd.emit()">Olvidé mi contraseña</a></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <button mat-raised-button
+                color="primary"
+                (click)="onSubmit.emit(fields)"
+                >Entrar</button>
+            </div>
+        </div>
+    </mat-card-actions>
+</mat-card>

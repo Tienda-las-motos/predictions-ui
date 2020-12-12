@@ -1,0 +1,7 @@
+<div *ngIf="_login.user$ | async; else login">
+    <button mat-raised-button (click)="_login.singOut()">Cerrar Sesión</button>
+</div>
+<ng-template #login>
+    <button mat-raised-button (click)="openDialog()">Ingresar</button>
+
+</ng-template>

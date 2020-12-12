@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { LoginComponent } from './components/login/login.component';
 import { PredictionsComponent } from './components/predictions/predictions.component';
 import { ProductBlankComponent } from './components/product-blank/product-blank.component';
 import { ProductDetailsComponent } from './components/product-view/product-details/product-details.component';
@@ -20,7 +21,9 @@ const routes: Routes = [
                 { path: 'predicciones', component: PredictionsComponent }
             ]}
         ]},
-    ]}
+    ]
+    },
+    { path: 'login', component: LoginComponent}
 ];
 
 @NgModule({

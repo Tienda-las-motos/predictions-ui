@@ -1,0 +1,13 @@
+::ng-deep {
+    mat-card{
+        max-width: 320px;
+        mat-form-field {
+            width: 100%;
+            // .mat-form-field-outline {
+            //     background: #ffffff;
+            //     border-radius: 5px;
+            //     box-shadow: inset -2px -2px 3px rgba($color: #000000, $alpha: .5);
+            // }
+        }
+    }
+}

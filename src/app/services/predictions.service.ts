@@ -12,6 +12,7 @@ import { AlertService } from './alerts/alert.service';
 })
 export class PredictionsService {
     
+    APIurl: string = 'https://sales-predict.uc.r.appspot.com/'
     constructor (
         private _fs: AngularFirestore,
         private _http: HttpClient,
@@ -42,7 +43,7 @@ export class PredictionsService {
         } );
         console.log(requestForm);
         
-        return this._http.post( 'api/predictions/estimated', requestForm, { headers } )
+        return this._http.post(this.APIurl+'api/predictions/estimated', requestForm, { headers } )
             .pipe(
                 tap( ( response ) => console.log( response ) ),
                 map( ( response: ApiResponse ) => {
@@ -64,7 +65,7 @@ export class PredictionsService {
         } );
         console.log(requestForm);
         
-        return this._http.post( 'api/predictions/arima', requestForm, { headers } )
+        return this._http.post( this.APIurl+'api/predictions/arima', requestForm, { headers } )
             .pipe(
                 tap( ( response ) => console.log( response ) ),
                 map( ( response: ApiResponse ) => {

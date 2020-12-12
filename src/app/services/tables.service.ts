@@ -17,7 +17,7 @@ import { TableData } from '../models/table.model';
 })
 export class TablesService {
 
-    APIurl: string = 'http://127.0.0.1:8000/api/'
+    APIurl: string = 'https://sales-predict.uc.r.appspot.com/'
     tables$: Observable<TableData[]>
     tableList$: Observable<ProductItemList[]>
     tableLoaded$: Subject<any> = new Subject()
@@ -45,7 +45,7 @@ export class TablesService {
             'Accept': 'application/json'
         } );
 
-        return this._http.post( 'api/load-file', formData, { headers } )
+        return this._http.post( this.APIurl+'api/load-file', formData, { headers } )
             .pipe(
                 map( ( response: ApiResponse ) => {
                     if ( response.status === 200 ) {
@@ -76,7 +76,7 @@ export class TablesService {
 
     getTable( tableId ): Observable<any> {
         
-        return this._http.get( `api/table?table=${tableId}` ).pipe(
+        return this._http.get( `${this.APIurl}api/table?table=${tableId}` ).pipe(
             tap( (response)=> console.log(response)),
             map( ( response: ApiResponse ) => {
                 if ( response.status === 200 ) {
