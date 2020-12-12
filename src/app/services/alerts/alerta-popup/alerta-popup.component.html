@@ -1,0 +1,34 @@
+<ng-container *ngIf="alerta.type == 'pregunta';then Pregunta; else aviso"></ng-container>
+<ng-template #Pregunta>
+<mat-dialog-content>
+        <div class="row">
+            <div class="col s12 center">
+                <p>{{alerta.message}}</p>
+            </div>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions style="display: flex; justify-content: space-around;">
+        <div class="opcion center">
+            <button color="primary" mat-raised-button [mat-dialog-close]="false">{{alerta.falseMsg}}</button>
+        </div>
+        <div class="opcion center">
+            <button color="accent" mat-raised-button [mat-dialog-close]="true">{{alerta.trueMsg}}</button>
+        </div>
+    </mat-dialog-actions>
+</ng-template>
+    <ng-template #aviso>
+        <mat-dialog-content>
+            
+            <div class="row">
+                <div class="col s12 center">
+                    <p>{{alerta.message}}</p>
+                </div>
+            </div>
+        
+        </mat-dialog-content>
+        <mat-dialog-actions style="display: flex; justify-content: space-around;">
+            <div class="col s12 center">
+                <button color="primary" mat-raised-button (click)="dialog.close()">{{alerta.trueMsg}}</button>
+            </div>
+        </mat-dialog-actions>
+    </ng-template>

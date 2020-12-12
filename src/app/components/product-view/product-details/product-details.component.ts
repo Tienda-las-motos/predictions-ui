@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { AvgStats, ProductModel, ProductStats } from 'src/app/models/product.model';
+import { CacheService } from 'src/app/services/cache.service';
+import { Loading } from 'src/app/services/loading/loading.service';
+import { ProductsService } from 'src/app/services/products.service';
 import { MonthDetails } from '../../../models/product.model';
 
 
@@ -29,14 +33,39 @@ export class ProductDetailsComponent implements OnInit {
     stats: ProductStats = {
         avgs: this.avg_stats,
         files: {
-            'sales_chart': ''
+            'chart': ''
         }
     }
-    constructor () {
-      this.product = new ProductModel('','',this.stats, this.monthDetails)
-   }
 
-  ngOnInit(): void {
-  }
+    tableId: string
+
+    constructor (
+        private _products: ProductsService,
+        private _route: ActivatedRoute,
+        private _loading: Loading,
+    ) {
+        this.product = new ProductModel( '', '', this.stats )
+        this._loading.colectRouteData().subscribe( data => {
+            this.product.code = data.params[ 'product' ]
+            this.tableId = data.params['table']
+        })
+    }
+
+    async ngOnInit() {
+        console.log( this.product.code )
+        this._loading.toggleWaitingSpinner(true)
+        this.product = await this._products.getProduct( this.product.code )
+        this._loading.toggleWaitingSpinner(false)
+    }
+
+
+    loadMonthDetails() {
+        this._loading.toggleWaitingSpinner(true)
+        this._products.getMonthDetails( this.tableId, this.product.code )
+            .subscribe( result => {
+                this._loading.toggleWaitingSpinner(false)
+                this.product.month_details = result
+            } )
+    }
 
 }

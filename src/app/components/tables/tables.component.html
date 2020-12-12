@@ -1,14 +1,16 @@
-<mat-drawer-container [hasBackdrop]="">
+<mat-drawer-container>
     <mat-drawer
-        #tableDrawer
+        #productDrawer
         [position]="'push'"
         [mode]="'side'"
         [opened]="true"
-        class="drawer table-drawer"
+        class="drawer product-drawer"
     >
-        <app-tables-drawer></app-tables-drawer>
+        <app-products-drawer></app-products-drawer>
     </mat-drawer>
-    <mat-drawer-content>
+    <mat-drawer-content
+        class="content"
+    >
         <router-outlet></router-outlet>
     </mat-drawer-content>
 </mat-drawer-container>

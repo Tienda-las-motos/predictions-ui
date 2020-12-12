@@ -1,13 +1,21 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+
+import { LoadingModule } from './services/loading/loading.module';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FirebaseModule } from './shared/firebase.module';
-import { ComunesModule } from './shared/comunes.module';
-import { MaterialModule } from './shared/material.module';
+import { FirebaseModule } from './firebase.module';
+import { ComunesModule } from './comunes.module';
+import { MaterialModule } from './material.module';
+
+import { NgxMaskModule, IConfig } from 'ngx-mask'
+export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
+
+
+import { AppComponent } from './app.component';
 import { TopbarComponent } from './components/topbar/topbar.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TablesDrawerComponent } from './components/tables-drawer/tables-drawer.component';
@@ -17,6 +25,10 @@ import { ProductDetailsComponent } from './components/product-view/product-detai
 import { PredictionsComponent } from './components/predictions/predictions.component';
 import { EstimatedComponent } from './components/predictions/estimated/estimated.component';
 import { ArimaComponent } from './components/predictions/arima/arima.component';
+import { ProductBlankComponent } from './components/product-blank/product-blank.component';
+import { UploadTableComponent } from './components/tables-drawer/upload-table/upload-table.component';
+import { GdevAlertModule } from './services/alerts/gdev-alert.module';
+import { TablesComponent } from './components/tables/tables.component';
 
 @NgModule({
     declarations: [
@@ -30,6 +42,9 @@ import { ArimaComponent } from './components/predictions/arima/arima.component';
         PredictionsComponent,
         EstimatedComponent,
         ArimaComponent,
+        ProductBlankComponent,
+        UploadTableComponent,
+        TablesComponent,
     ],
     imports: [
         BrowserModule.withServerTransition({ appId: 'serverApp' }),
@@ -40,6 +55,10 @@ import { ArimaComponent } from './components/predictions/arima/arima.component';
         FirebaseModule,
         ComunesModule,
         MaterialModule,
+        HttpClientModule,
+        LoadingModule,
+        GdevAlertModule,
+        NgxMaskModule.forRoot(),
     ],
     providers: [],
     bootstrap: [AppComponent],

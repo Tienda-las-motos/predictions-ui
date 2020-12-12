@@ -1,15 +1,15 @@
 export class ProductModel {
     constructor (
         public name: string,
-        public code: string,
+        public code?: string,
         public stats?: ProductStats,
         public month_details?: MonthDetails
     ){}
 }
 
 export interface ProductItemList {
-    name: string,
-    code: string
+    codigo: string,
+    descripcion: string
 }
 
 export interface ProductStats {
@@ -19,7 +19,7 @@ export interface ProductStats {
     }
     export interface StatsFiles {
         data_byperiods?: string,
-        sales_chart?: string,
+        chart?: string,
         dataset?: string,
         timeline?: string
     }

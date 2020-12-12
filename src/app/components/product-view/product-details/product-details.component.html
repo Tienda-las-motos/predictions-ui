@@ -39,11 +39,11 @@
                         <tbody>
                             <tr>
                                 <td>Precio mínimo</td>
-                                <td>{{product.stats.avgs.min_purch_price}}</td>
+                                <td>${{product.stats.avgs.min_purch_price }}</td>
                             </tr>
                             <tr>
                                 <td>Precio promedio</td>
-                                <td>{{product.stats.avgs.avg_purch_price}}</td>
+                                <td>${{product.stats.avgs.avg_purch_price}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -64,11 +64,11 @@
                         <tbody>
                             <tr>
                                 <td>Precio máximo</td>
-                                <td>{{product.stats.avgs.max_sell_price}}</td>
+                                <td>${{product.stats.avgs.max_sell_price}}</td>
                             </tr>
                             <tr>
                                 <td>Precio Promedio</td>
-                                <td>{{product.stats.avgs.avg_sell_price}}</td>
+                                <td>${{product.stats.avgs.avg_sell_price}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -89,11 +89,11 @@
                         <tbody>
                             <tr>
                                 <td>Mayor margen</td>
-                                <td>{{product.stats.avgs.max_margin}}</td>
+                                <td>{{product.stats.avgs.max_margin}}%</td>
                             </tr>
                             <tr>
                                 <td>Promedio</td>
-                                <td>{{product.stats.avgs.avg_margin}}</td>
+                                <td>{{product.stats.avgs.avg_margin}}%</td>
                             </tr>
                         </tbody>
                     </table>
@@ -109,7 +109,7 @@
                 <mat-card-header>
                     <mat-card-title>Ventas vs Costos</mat-card-title>
                 </mat-card-header>
-                <img mat-card-image src="https://storage.googleapis.com/sales-predict.appspot.com/tables/GscRwIx3AbcdcnevaZmz/product/banda_freno_del_y_tras/sales-chart.jpg" alt="Ventas vs Costos">
+                <img mat-card-image [src]="product.stats.files.chart" alt="Ventas vs Costos">
             </mat-card>
         </div>
     </div>
@@ -125,14 +125,19 @@
                     </mat-card-subtitle>
                 </mat-card-header>
                 <mat-card-content>
-                    <button mat-raised-button color="primary">Generar detalles</button>
-                    <div class="row">
-                        <div class="col s12">
-                            <p>Promedio de ventas mensuales: {{product.month_details.avgsales_per_month}}</p>
+                    <button mat-raised-button color="primary"
+                    (click)="loadMonthDetails()"
+                    >Generar detalles</button>
+                    <ng-container *ngIf="product.month_details">
+                        <div class="row">
+                            <div class="col s12">
+                                <p>Promedio de ventas mensuales: {{product.month_details.avgsales_per_month}}</p>
+                            </div>
                         </div>
-                    </div>
-                </mat-card-content>
-                <img mat-card-image src="https://storage.googleapis.com/sales-predict.appspot.com/tables/GscRwIx3AbcdcnevaZmz/product/banda_freno_del_y_tras/month_sales_normalized.jpg" alt="Detalles mensuales">
+                        <img mat-card-image [src]="product.month_details.month_sales_chart" alt="Detalles mensuales">
+                    </ng-container>
+                    </mat-card-content>
+
             </mat-card>
         </div>
     </div>

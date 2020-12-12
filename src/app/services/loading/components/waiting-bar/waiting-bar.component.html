@@ -1,0 +1,6 @@
+<!-- <div  class="waiting-bar">
+</div> -->
+<mat-progress-bar 
+*ngIf="state$.asObservable() | async" 
+mode="indeterminate"
+></mat-progress-bar>

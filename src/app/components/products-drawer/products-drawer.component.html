@@ -5,20 +5,32 @@
 </span>
 <div class="row select-row">
     <div class="col s12 center">
-        <mat-select placeholder="Elige un producto" [(ngModel)]="productSelected" name="item">
-            <mat-option *ngFor="let item of productList" [value]="item.code">
-                {{item.name}}
-            </mat-option>
-        </mat-select>
+        <form class="example-form">
+            <mat-form-field class="example-full-width">
+                <input type="text"
+                        placeholder="Elije un producto"
+                        matInput
+                        aria-label="Number"
+                        [formControl]="listControl"
+                        name="productSelected"
+                        [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete" [panelWidth]="'fit-content'">
+                    <mat-option *ngFor="let item of filteredProducts | async" [value]="item.codigo">
+                        {{item.descripcion}}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+            <button mat-raised-button
+            (click)="selectProduct()"
+            color="primary">
+                Cargar
+            </button>
+          </form>
     </div>
 </div>
-<div class="row prod-row selected">
+<div class="row prod-row" *ngFor="let prod of products_.productsFS$ | async" [ngClass]="{'selected': selected === prod.code}">
     <div class="col s12">
-        <p>Balatas</p>
+        <p>{{prod.name}}</p>
     </div>
 </div>
-<div class="row prod-row">
-    <div class="col s12">
-        <p>Freno de disco</p>
-    </div>
-</div>
+

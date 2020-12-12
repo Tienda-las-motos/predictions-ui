@@ -1,0 +1,15 @@
+<h4 mat-dialog-title class="center"></h4>
+<mat-dialog-content>
+    <mat-expansion-panel >
+        <mat-expansion-panel-header>
+            {{data.mensaje}}
+        </mat-expansion-panel-header>
+        {{data.systemError}}
+    </mat-expansion-panel>
+</mat-dialog-content>
+<mat-dialog-actions style="display: flex; justify-content: center;">
+    <button mat-raised-button 
+    (click)="dialog.close()">
+        Cerrar
+    </button>
+</mat-dialog-actions>

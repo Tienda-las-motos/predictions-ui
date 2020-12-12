@@ -8,16 +8,8 @@ mat-drawer-container, mat-drawer-content {
 }
 
 .content {
-    width: calc(100% - 400px);
+    width: calc(100% - 200px);
     float: right;
     max-height: 93vh;
     overflow: hidden;
 }
-
-// .table-drawer {
-//     background: #f0f0f0;
-// }
-
-// .product-drawer {
-//     transform: translateX(100%) !important
-// }

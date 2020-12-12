@@ -1,0 +1,28 @@
+<button mat-icon-button class="right" (click)="dialog_.close()">
+    <i class="fas fa-times fa-2x close"></i>
+</button>
+<mat-dialog-content>
+    Puedes subir un archivo CSV con el registro de tus ventas que contenga las siguientes columnas:
+    <ul>
+        <li> <b>fecha: </b>Fecha en la que se realizó la venta. </li>
+        <li> <b>codigo: </b>El código de identificación del artículo vendido </li>
+        <li> <b>descripcion: </b>Nombre o referencia del artículo vendido </li>
+        <li> <b>unidades: </b>Cantidad de unidades vendidas.</li>
+        <li> <b>precio_unit_venta: </b>precio unitario de venta</li>
+        <li> <b>precio_unit_costo: </b>precio unitario de costo de compra</li>
+        <li> <b>por_margen: </b>El margen de ganancia </li>
+    </ul>
+</mat-dialog-content>
+<mat-dialog-actions
+style="display: flex; justify-content: space-around;">
+    <button mat-raised-button
+    color="accent"
+    (click)="file.click()"
+    >Cargar Archivo</button>
+    <button mat-raised-button
+    color="primary"
+    [disabled]="!loadedFile"
+    (click)="upload()"
+    >Guardar</button>
+</mat-dialog-actions>
+<input #file type="file" name="table" id="table" style="display: none" (change)="catchFile($event)">

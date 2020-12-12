@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --proxy-config proxy.conf.json",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -29,10 +29,11 @@
     "@angular/router": "~9.1.9",
     "@nguniversal/express-engine": "^9.1.1",
     "express": "^4.15.2",
+    "firebase": "^7.0 || ^8.0",
+    "ngx-mask": "^11.1.4",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
-    "zone.js": "~0.10.2",
-    "firebase": "^7.0 || ^8.0"
+    "zone.js": "~0.10.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.901.7",
