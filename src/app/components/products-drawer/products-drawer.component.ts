@@ -33,9 +33,8 @@ export class ProductsDrawerComponent implements OnInit {
     ) {
         let table = this._cache.getDataKey( 'currentTable' )
         if ( table ) { this.tableId = table[ 'data' ].doc_id }
-        this._loading.getRouteParams().subscribe( params => {
-            this.selected = params[ 'product' ]
-            console.log(this.selected);
+        this._loading.colectRouteData().subscribe( data => {
+            this.selected = data.params[ 'product' ]
             // let product = this._cache.getDataKey( 'currentProduct' )
             // if ( product[ 'data' ].doc_id !== this.selected ) {
             //     if ( this.selected ) {
@@ -62,7 +61,6 @@ export class ProductsDrawerComponent implements OnInit {
 
     private _filter(value: string): ProductItemList[] {
         const filterValue = value.toLowerCase();
-        console.log(filterValue)
         return this.productList.filter(option => option.descripcion.toLowerCase().includes(filterValue));
     }
 
@@ -74,6 +72,11 @@ export class ProductsDrawerComponent implements OnInit {
                 console.log( result )
                 this._router.navigate([`/dashboard/table/${this.tableId}/product/${result.code}`])
         })
+    }
+
+    navigateProduct( productId: string ) {
+        this.products_.loadProduct$.next(productId)
+        this._router.navigate([`/dashboard/table/${this.tableId}/product/${productId}`])
     }
 
 

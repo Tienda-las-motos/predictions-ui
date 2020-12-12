@@ -13,7 +13,8 @@
 <div
     class="row file-row"
     *ngFor="let table of tables_.tables$ | async"
-    [ngClass]="{ selected: selected == table.doc_id }"
+    [ngClass]="{ 'selected': selected == table.doc_id }"
+    (click)="selectTable(table.doc_id)"
 >
     <div class="col s12" [routerLink]="['/dashboard/table', table.doc_id]">
         <p>{{ table.file_name }}</p>

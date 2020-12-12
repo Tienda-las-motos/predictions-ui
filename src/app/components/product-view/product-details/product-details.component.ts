@@ -5,6 +5,7 @@ import { CacheService } from 'src/app/services/cache.service';
 import { Loading } from 'src/app/services/loading/loading.service';
 import { ProductsService } from 'src/app/services/products.service';
 import { MonthDetails } from '../../../models/product.model';
+import { distinctUntilChanged } from 'rxjs/operators';
 
 
 @Component({
@@ -45,17 +46,25 @@ export class ProductDetailsComponent implements OnInit {
         private _loading: Loading,
     ) {
         this.product = new ProductModel( '', '', this.stats )
+        
+        this._loading.toggleWaitingSpinner( true )
+        this._products.loadProduct$
+            .pipe(distinctUntilChanged())
+            .subscribe( id => {
+                this._products.getProduct( id )
+                    .then( product => this.product = product )
+            })
+
         this._loading.colectRouteData().subscribe( data => {
-            this.product.code = data.params[ 'product' ]
+            let id = data.params[ 'product' ]
+            this._products.loadProduct$.next( id )
             this.tableId = data.params['table']
         })
+        this._loading.toggleWaitingSpinner(false)
     }
 
     async ngOnInit() {
-        console.log( this.product.code )
-        this._loading.toggleWaitingSpinner(true)
-        this.product = await this._products.getProduct( this.product.code )
-        this._loading.toggleWaitingSpinner(false)
+        
     }
 
 

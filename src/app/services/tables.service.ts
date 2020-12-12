@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { response } from 'express';
-import { Observable, throwError, of } from 'rxjs';
+import { Observable, throwError, of, Subject } from 'rxjs';
 import { map, catchError, switchMap, tap } from 'rxjs/operators';
 import { ApiResponse } from '../models/response.model';
 import { Loading } from './loading/loading.service';
@@ -20,6 +20,7 @@ export class TablesService {
     APIurl: string = 'http://127.0.0.1:8000/api/'
     tables$: Observable<TableData[]>
     tableList$: Observable<ProductItemList[]>
+    tableLoaded$: Subject<any> = new Subject()
 
     constructor (
         private _http: HttpClient,
@@ -74,7 +75,7 @@ export class TablesService {
     }
 
     getTable( tableId ): Observable<any> {
-        console.log(tableId)
+        
         return this._http.get( `api/table?table=${tableId}` ).pipe(
             tap( (response)=> console.log(response)),
             map( ( response: ApiResponse ) => {
@@ -83,7 +84,7 @@ export class TablesService {
                 } else {
                     this._alert.sendMessageAlert(response.message)
                 }
-                return response.result
+                return response.result.data
             }),
             catchError(error => throwError(error))
         )

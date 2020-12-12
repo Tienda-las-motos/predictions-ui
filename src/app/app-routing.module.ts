@@ -11,7 +11,9 @@ import { TablesComponent } from './components/tables/tables.component';
 const routes: Routes = [
     {path: '', pathMatch:'full', redirectTo:'dashboard'},
     {path: 'dashboard', component:DashboardComponent, children: [
+        { path: '', component:ProductBlankComponent},
         { path: 'table/:table', component: TablesComponent, children: [
+            { path: '', component:ProductBlankComponent},
             { path: 'product/:product', component: ProductViewComponent, children: [
                 { path:'', pathMatch:'full',redirectTo:'detalles'},
                 { path: 'detalles', component: ProductDetailsComponent },

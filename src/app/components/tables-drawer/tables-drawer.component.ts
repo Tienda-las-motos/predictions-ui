@@ -4,7 +4,7 @@ import { TableData } from 'src/app/models/table.model';
 import { AlertService } from 'src/app/services/alerts/alert.service';
 import { TablesService } from 'src/app/services/tables.service';
 import { UploadTableComponent } from './upload-table/upload-table.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Loading } from 'src/app/services/loading/loading.service';
 import { ClassGetter } from '@angular/compiler/src/output/output_ast';
 import { CacheService } from '../../services/cache.service';
@@ -23,7 +23,8 @@ export class TablesDrawerComponent implements OnInit {
         private _alerts: AlertService,
         private _loading: Loading,
         public tables_: TablesService,
-        private _cache: CacheService
+        private _cache: CacheService,
+        private _router: Router
     ) {
         this._loading.getRouteParams().subscribe( params => {
             this.selected = params[ 'table' ]
@@ -40,7 +41,22 @@ export class TablesDrawerComponent implements OnInit {
 
     async ngOnInit() {
 
-     }
+    }
+    
+    selectTable( tableId ) {
+        if ( this.selected !== tableId ) {
+            this._loading.toggleWaitingSpinner(true)
+            this.tables_.getTable( tableId ).subscribe( ( result: TableData ) => {
+                this.selected = result.doc_id
+                this.tables_.tableLoaded$.next()
+                this._alerts.sendMessageAlert( `Se cargaron ${ result.total_count } de la tabla ${ result.file_name }` )
+                    .subscribe( () => {
+                        this._router.navigate( [ `/dashboard/table/${ tableId }` ] )
+                })
+            })
+            this._loading.toggleWaitingSpinner(false)
+        }
+    }
 
     openUploadBox() {
         var dialog = this._dialog

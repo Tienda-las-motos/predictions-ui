@@ -4,59 +4,87 @@
             <mat-card-header>
                 <mat-card-title>Predicción ARIMA</mat-card-title>
                 <mat-card-subtitle>
-                    La medida móvil integrada autoregresiva te permite realizar una comparación temporal para predecir tendencias en el futuro. Proponiendo así una predicción más precisa. <b class="black-text">Es necesario generar detalles mensuales para correr esta predicción.</b>
+                    La medida móvil integrada autoregresiva te permite realizar
+                    una comparación temporal para predecir tendencias en el
+                    futuro. Proponiendo así una predicción más precisa.
+                    <b class="black-text"
+                        >Es necesario generar detalles mensuales para correr
+                        esta predicción.</b
+                    >
                 </mat-card-subtitle>
             </mat-card-header>
 
             <!-- FORMULARIO Y RESULTADOS -->
             <mat-card-content>
                 <div class="row">
-
-
                     <!-- FORMULARIO -->
                     <div class="col s12 m6">
                         <form action="#" [formGroup]="form">
                             <div class="row">
                                 <div class="col s12">
                                     <mat-form-field appearance="outline">
-                                        <mat-hint>Elige la cantidad porcentual que se tomará del total de las ventas para realizar una relación prueba y error. Lo más recomendable es un 20%</mat-hint>
+                                        <mat-hint
+                                            >Elige la cantidad porcentual que se
+                                            tomará del total de las ventas para
+                                            realizar una relación prueba y
+                                            error. Lo más recomendable es un
+                                            20%</mat-hint
+                                        >
                                         <mat-label>Tamaño de muestra</mat-label>
                                         <input
-                                        matInput
-                                        type="number"
-                                        name="test_size"
-                                        formControlName="test_size"
-                                        max="100"
-                                        min="0"
-                                        required
-                                        >
+                                            matInput
+                                            type="number"
+                                            name="test_size"
+                                            formControlName="test_size"
+                                            max="100"
+                                            min="0"
+                                            required
+                                        />
                                     </mat-form-field>
                                 </div>
                                 <div class="col s12">
-                                    <button mat-raised-button color="primary" [disabled]="!form.valid">Obtener resultado</button>
+                                    <button
+                                        mat-raised-button
+                                        color="primary"
+                                        [disabled]="!form.valid"
+                                        (click)="makePrediction()"
+                                    >
+                                        Obtener resultado
+                                    </button>
                                 </div>
                             </div>
                         </form>
-
-
                     </div>
-
 
                     <!-- RESULTADOS -->
                     <div class="col s12 m6">
                         <mat-card class="mat-elevation-z0 results-card">
                             <mat-card-header>
-                                <mat-card-subtitle>Resultados</mat-card-subtitle>
+                                <mat-card-subtitle
+                                    >Resultados</mat-card-subtitle
+                                >
                             </mat-card-header>
                             <mat-card-content>
                                 <table>
                                     <tbody>
                                         <tr>
-                                            <td>Promedio de unidades por ventas</td>
-                                            <td>{{results.avg_for_sell}}</td>
+                                            <td>
+                                                Promedio de unidades por ventas
+                                            </td>
+                                            <td>{{ results.avg_for_sell }}</td>
                                         </tr>
                                         <tr>
-                                            <td colspan="2">Se predice que se vendan {{results.total_predicted}} unidades en {{results.months_predicted}} meses</td>
+                                            <td colspan="2">
+                                                Se predice que se vendan
+                                                {{
+                                                    results.total_predicted
+                                                }}
+                                                unidades en
+                                                {{
+                                                    results.months_predicted
+                                                }}
+                                                meses
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -65,7 +93,7 @@
                     </div>
                 </div>
             </mat-card-content>
-            <img mat-card-image src="https://storage.googleapis.com/sales-predict.appspot.com/tables/GscRwIx3AbcdcnevaZmz/products/10012919arima_prediction.jpg" alt="Predicción ARIMA">
+            <img mat-card-image [src]="results.imgURL" alt="Predicción ARIMA" />
         </mat-card>
     </div>
 </div>

@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, throwError, of } from 'rxjs';
+import { Observable, throwError, of, Subject } from 'rxjs';
 import { tap, map, catchError, switchMap } from 'rxjs/operators';
 import { ApiResponse } from '../models/response.model';
 import { AlertService } from './alerts/alert.service';
 import { CacheService } from './cache.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ProductModel } from '../models/product.model';
+import { TablesService } from './tables.service';
 
 @Injectable({
     providedIn: 'root',
@@ -14,14 +15,18 @@ import { ProductModel } from '../models/product.model';
 export class ProductsService {
 
     productsFS$: Observable<ProductModel[]>
+    loadProduct$: Subject<string> = new Subject();
 
     constructor (
         private _http: HttpClient,
         private _cache: CacheService,
         private _alert: AlertService,
-        private _fs: AngularFirestore
+        private _fs: AngularFirestore,
+        private _tables: TablesService
     ) {
         this.getProducts()
+        this._tables.tableLoaded$
+            .subscribe( () => this.getProducts() )
     }
 
 
@@ -76,9 +81,12 @@ export class ProductsService {
         const tableId = currentTable[ 'data' ].doc_id
 
 
+        
         let productDoc = await this._fs.doc( `tables/${ tableId }/products/${ productId }` ).ref.get()
-        console.log(productDoc.data())
+
         let product: ProductModel = productDoc.data() as ProductModel
+        product.stats.time_data.first_sale_date = productDoc.data()['stats'].time_data.first_sale_date.toDate()
+        product.stats.time_data.last_sale_date = productDoc.data()['stats'].time_data.last_sale_date.toDate()
         return product
     }
 }

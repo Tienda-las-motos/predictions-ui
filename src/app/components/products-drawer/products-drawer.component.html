@@ -7,30 +7,40 @@
     <div class="col s12 center">
         <form class="example-form">
             <mat-form-field class="example-full-width">
-                <input type="text"
-                        placeholder="Elije un producto"
-                        matInput
-                        aria-label="Number"
-                        [formControl]="listControl"
-                        name="productSelected"
-                        [matAutocomplete]="auto">
-                <mat-autocomplete #auto="matAutocomplete" [panelWidth]="'fit-content'">
-                    <mat-option *ngFor="let item of filteredProducts | async" [value]="item.codigo">
-                        {{item.descripcion}}
+                <input
+                    type="text"
+                    placeholder="Elije un producto"
+                    matInput
+                    aria-label="Number"
+                    [formControl]="listControl"
+                    name="productSelected"
+                    [matAutocomplete]="auto"
+                />
+                <mat-autocomplete
+                    #auto="matAutocomplete"
+                    [panelWidth]="'fit-content'"
+                >
+                    <mat-option
+                        *ngFor="let item of filteredProducts | async"
+                        [value]="item.codigo"
+                    >
+                        {{ item.descripcion }}
                     </mat-option>
                 </mat-autocomplete>
             </mat-form-field>
-            <button mat-raised-button
-            (click)="selectProduct()"
-            color="primary">
+            <button mat-raised-button (click)="selectProduct()" color="primary">
                 Cargar
             </button>
-          </form>
+        </form>
     </div>
 </div>
-<div class="row prod-row" *ngFor="let prod of products_.productsFS$ | async" [ngClass]="{'selected': selected === prod.code}">
+<div
+    class="row prod-row"
+    *ngFor="let prod of products_.productsFS$ | async"
+    [ngClass]="{ selected: selected === prod.code }"
+    (click)="navigateProduct(prod.code)"
+>
     <div class="col s12">
-        <p>{{prod.name}}</p>
+        <p>{{ prod.name }}</p>
     </div>
 </div>
-

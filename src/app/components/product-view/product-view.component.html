@@ -1,5 +1,11 @@
 <span>
     <mat-toolbar color="accent">
+        <span>
+            <button mat-icon-button
+            (click)="goBack()">
+                <i class="fas fa-angle-left fa-2x"></i>    
+            </button>
+        </span>
         <span class="prod-description">
             <span class="product_name">{{product.name}}</span>
             <span class="time_stats">

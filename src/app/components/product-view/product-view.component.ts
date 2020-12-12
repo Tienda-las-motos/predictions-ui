@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductModel, ProductStats, TimeStats } from 'src/app/models/product.model';
 import { TextService } from 'src/app/services/gdev-text.service';
+import { Loading } from 'src/app/services/loading/loading.service';
+import { ProductsService } from 'src/app/services/products.service';
+import { distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
     selector: 'app-product-view',
@@ -19,17 +22,34 @@ export class ProductViewComponent implements OnInit {
     stats: ProductStats = {time_data: this.time_data}
 
     sections: string[] = [ 'detalles', 'predicciones' ]
-    activeLink = this.sections[0]
+    activeLink = this.sections[ 0 ]
+    
+    tableId: string
+    productId: string
 
     constructor (
         public text_: TextService,
-        private _route: ActivatedRoute
+        private _loading: Loading,
+        private _products: ProductsService,
+        private _router: Router
     ) {
-        this.product = new ProductModel('', '', this.stats);
+        this.product = new ProductModel( '', '', this.stats );
+        
+        this._products.loadProduct$
+            .pipe(distinctUntilChanged())
+            .subscribe( id => {
+                this.productId = id
+                this._products.getProduct( this.productId )
+                .then( product => this.product = product )
+            })
+        this._loading.colectRouteData().subscribe( data => {
+            let id = data.params[ 'product' ]
+            this._products.loadProduct$.next( id )
+            this.tableId = data.params[ 'table']
+        })
     }
 
     ngOnInit(): void {
-        this.product.name = 'Balatas'
         this.getActiveLink()
     }
 
@@ -43,9 +63,14 @@ export class ProductViewComponent implements OnInit {
     }
 
     get firstDate() {
-        return this.text_.stringifyDate(this.time_data.first_sale_date)
+        
+        return this.text_.stringifyDate(this.product.stats.time_data.first_sale_date)
     }
     get lastDate() {
-        return this.text_.stringifyDate(this.time_data.last_sale_date)
+        return this.text_.stringifyDate(this.product.stats.time_data.last_sale_date)
+    }
+
+    goBack() {
+        this._router.navigate([`/dashboard/table/${this.tableId}`])
     }
 }
