@@ -49,12 +49,13 @@ export class TablesDrawerComponent implements OnInit {
             this.tables_.getTable( tableId ).subscribe( ( result: TableData ) => {
                 this.selected = result.doc_id
                 this.tables_.tableLoaded$.next()
+                this._loading.toggleWaitingSpinner(false)
                 this._alerts.sendMessageAlert( `Se cargaron ${ result.total_count } de la tabla ${ result.file_name }` )
                     .subscribe( () => {
+                        console.log('Rediirje a ', `/dashboard/table/${ tableId }`)
                         this._router.navigate( [ `/dashboard/table/${ tableId }` ] )
                 })
             })
-            this._loading.toggleWaitingSpinner(false)
         }
     }
 

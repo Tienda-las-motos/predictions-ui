@@ -208,9 +208,7 @@
         },
         "deploy": {
           "builder": "@angular/fire:deploy",
-          "options": {
-            "ssr": true
-          }
+          "options": {}
         }
       }
     }

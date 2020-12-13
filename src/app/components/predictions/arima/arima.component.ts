@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ArimaResults } from 'src/app/models/predictions.model';
 import { PredictionsService } from '../../../services/predictions.service';
 import { Loading } from '../../../services/loading/loading.service';
@@ -16,6 +16,7 @@ export class ArimaComponent implements OnInit {
     @Input() productId: string
 
     form: FormGroup;
+    testControl = new FormControl(20, [ Validators.required]);
 
     results: PredictionResults = {
         avg_for_sell: 0,
@@ -48,6 +49,12 @@ export class ArimaComponent implements OnInit {
                 }
             });
     }
+
+    getTestError() {
+        if (this.testControl.hasError('required')) {
+          return 'Este valor es necesario';
+        }
+      }
 
     makePrediction() {
         this._loading.toggleWaitingSpinner(true)

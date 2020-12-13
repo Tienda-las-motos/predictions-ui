@@ -22,19 +22,22 @@
                                             >Elige la cantidad porcentual que se
                                             tomará del total de las ventas para
                                             realizar una relación prueba y
-                                            error. Lo más recomendable es un
-                                            20%</mat-hint
-                                        >
+                                            error.
+                                            <span class="orange-text text-darken-4">Lo más recomendable es entre un 20% y 25%</span> 
+                                        </mat-hint>
                                         <mat-label>Tamaño de muestra</mat-label>
                                         <input
                                             matInput
                                             type="number"
                                             name="test_size"
-                                            formControlName="test_size"
+                                            [formControl]="testControl"
                                             max="100"
                                             min="0"
                                             required
                                         />
+                                        <mat-error *ngIf="windowControl.invalid">
+                                            {{getTestError()}}
+                                        </mat-error>
                                     </mat-form-field>
                                 </div>
                                 <div class="col s12">
@@ -44,17 +47,25 @@
                                             generar el menor error entre la
                                             predicción y los datos reales. Se
                                             recomienda explorar manualmente el
-                                            menor error cuadrático</mat-hint
-                                        >
+                                            menor error cuadrático
+                                            <span class="orange-text text-darken-4">
+                                                El valor mínimo es 2 y máxmo 10
+                                            </span>
+                                        </mat-hint>
                                         <mat-label>Tolerancia</mat-label>
                                         <input
                                             matInput
                                             type="number"
                                             name="window_size"
+                                            [formControl]="windowControl"
                                             max="10"
                                             min="2"
                                             required
                                         />
+                                        <mat-error *ngIf="windowControl.invalid">
+                                            {{getWindowError()}}
+                                        </mat-error>
+                                                
                                     </mat-form-field>
                                 </div>
                                 <div class="col s12">

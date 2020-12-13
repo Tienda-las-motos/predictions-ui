@@ -24,22 +24,23 @@
                                 <div class="col s12">
                                     <mat-form-field appearance="outline">
                                         <mat-hint
-                                            >Elige la cantidad porcentual que se
-                                            tomará del total de las ventas para
-                                            realizar una relación prueba y
-                                            error. Lo más recomendable es un
-                                            20%</mat-hint
+                                            >Elige la cantidad de iteraciones (o ventas) que la predicción avanzará en el futuro. Por ejemplo: Si deseas avanzar 10 o 15 o 20 ventas futuras
+                                            <span class="orange-text text-darken-4">
+                                                Lo más recomendable es no exceder el 50% de tus ventas registradas
+                                            </span>
+                                        </mat-hint
                                         >
                                         <mat-label>Tamaño de muestra</mat-label>
                                         <input
                                             matInput
                                             type="number"
                                             name="test_size"
-                                            formControlName="test_size"
-                                            max="100"
-                                            min="0"
+                                            [formControl]="testControl"
                                             required
                                         />
+                                        <mat-error *ngIf="testControl.invalid">
+                                            {{getTestError()}}
+                                        </mat-error>
                                     </mat-form-field>
                                 </div>
                                 <div class="col s12">

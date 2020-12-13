@@ -45,7 +45,7 @@ export class TablesService {
             'Accept': 'application/json'
         } );
 
-        return this._http.post( this.APIurl+'api/load-file', formData, { headers } )
+        return this._http.post( this.APIurl+'api/load-file', formData )
             .pipe(
                 map( ( response: ApiResponse ) => {
                     if ( response.status === 200 ) {

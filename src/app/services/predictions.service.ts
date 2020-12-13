@@ -12,7 +12,7 @@ import { AlertService } from './alerts/alert.service';
 })
 export class PredictionsService {
     
-    APIurl: string = 'https://sales-predict.uc.r.appspot.com/'
+    APIurl: string = 'https://sales-predict.uc.r.appspot.com'
     constructor (
         private _fs: AngularFirestore,
         private _http: HttpClient,
@@ -40,10 +40,11 @@ export class PredictionsService {
         const headers: HttpHeaders = new HttpHeaders( {
             'ContentType': 'application/json',
             'Access-Control-Allow-Origin': '*',
+            'Accept': 'application/json'
         } );
         console.log(requestForm);
         
-        return this._http.post(this.APIurl+'api/predictions/estimated', requestForm, { headers } )
+        return this._http.get(`${this.APIurl}/api/predictions/estimated?table=${requestForm.table}&product=${requestForm.product}&test_size=${requestForm.test_size}&window_size=${requestForm.window_size}` )
             .pipe(
                 tap( ( response ) => console.log( response ) ),
                 map( ( response: ApiResponse ) => {
@@ -62,10 +63,11 @@ export class PredictionsService {
         const headers: HttpHeaders = new HttpHeaders( {
             'ContentType': 'application/json',
             'Access-Control-Allow-Origin': '*',
+            'Accept': 'application/json'
         } );
         console.log(requestForm);
         
-        return this._http.post( this.APIurl+'api/predictions/arima', requestForm, { headers } )
+        return this._http.get(`${this.APIurl}/api/predictions/arima?table=${requestForm.table}&product=${requestForm.product}&test_size=${requestForm.test_size}` )
             .pipe(
                 tap( ( response ) => console.log( response ) ),
                 map( ( response: ApiResponse ) => {
