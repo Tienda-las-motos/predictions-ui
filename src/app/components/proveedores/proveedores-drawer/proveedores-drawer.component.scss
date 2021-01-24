@@ -1,0 +1,24 @@
+.drawer-title {
+    mat-toolbar{
+        height: 45px;
+    }
+}
+
+
+.prov-row {
+    border-bottom: solid 1px #ccc;
+    cursor: pointer;
+    margin: 0;
+    height: 50px;
+    display:flex;
+    align-items: center;
+    padding: 1em 0 0;
+}
+.prod-row::hover {
+    background: #ccc;
+}
+
+.selected {
+    background: #929eaa;
+    font-weight: 600;
+}

@@ -14,12 +14,18 @@
                         <tbody>
                             <tr>
                                 <td>U. Vendidas</td>
-                                <td>{{product.stats.avgs.sold_units}}</td>
+                                <td>{{product.product_stats.sold_units}}</td>
                             </tr>
                             <tr>
                                 <td>Ventas</td>
-                                <td>{{product.stats.avgs.sales_quantity}}</td>
+                                <td>{{product.product_stats.sales_quantity}}</td>
                             </tr>
+                            
+                            <tr>
+                                <td>Promedio/Mes</td>
+                                <td>{{product.time_stats.avgsales_per_month}}</td>
+                            </tr>
+
                         </tbody>
                     </table>
                 </mat-card-content>
@@ -38,13 +44,19 @@
                     <table>
                         <tbody>
                             <tr>
-                                <td>Precio mínimo</td>
-                                <td>${{product.stats.avgs.min_purch_price }}</td>
+                                <td>Mínimo</td>
+                                <td>${{product.product_stats.min_buy_price }}</td>
                             </tr>
                             <tr>
-                                <td>Precio promedio</td>
-                                <td>${{product.stats.avgs.avg_purch_price}}</td>
+                                <td>Promedio</td>
+                                <td>${{product.product_stats.avg_buy_price}}</td>
                             </tr>
+                            
+                            <tr>
+                                <td>Sugerido</td>
+                                <td>${{product.buy_stats.suggest_buy_price}}</td>
+                            </tr>
+                            
                         </tbody>
                     </table>
                 </mat-card-content>
@@ -63,12 +75,16 @@
                     <table>
                         <tbody>
                             <tr>
-                                <td>Precio máximo</td>
-                                <td>${{product.stats.avgs.max_sell_price}}</td>
+                                <td>Máximo</td>
+                                <td>${{product.product_stats.max_sale_price}}</td>
                             </tr>
                             <tr>
-                                <td>Precio Promedio</td>
-                                <td>${{product.stats.avgs.avg_sell_price}}</td>
+                                <td>Promedio</td>
+                                <td>${{product.product_stats.avg_sale_price}}</td>
+                            </tr>
+                            <tr>
+                                <td>Sugerido</td>
+                                <td>${{product.sell_stats.suggest_sale_price}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -88,12 +104,16 @@
                     <table>
                         <tbody>
                             <tr>
-                                <td>Mayor margen</td>
-                                <td>{{product.stats.avgs.max_margin}}%</td>
+                                <td>Máximo</td>
+                                <td>{{product.product_stats.max_margin}}%</td>
                             </tr>
                             <tr>
                                 <td>Promedio</td>
-                                <td>{{product.stats.avgs.avg_margin}}%</td>
+                                <td>{{product.product_stats.avg_margin}}%</td>
+                            </tr>
+                            <tr>
+                                <td>Precio max rend</td>
+                                <td>${{product.sell_stats.max_throwput_sale_price}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -109,35 +129,71 @@
                 <mat-card-header>
                     <mat-card-title>Ventas vs Costos</mat-card-title>
                 </mat-card-header>
-                <img mat-card-image [src]="product.stats.files.chart" alt="Ventas vs Costos">
+                <img mat-card-image [src]="product.time_stats.files.sales_chart" alt="Ventas vs Costos">
             </mat-card>
         </div>
     </div>
 
     <!-- DETALLES MENSUALES -->
     <div class="row">
+        <!-- TABLA MES MAYOR VENTAS -->
+        <div class="col s12 m6 l4">
+            <mat-card>
+                <mat-card-header>
+                    <div mat-card-avatar>
+                        <i class="fas fa-dollar-sign fa-2x lime-text text-accent-4"></i>
+                    </div>
+                    <mat-card-title>Ventas</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>Mes Mayor Ventas</td>
+                                <td>{{product.time_stats.max_sales_month}}</td>
+                            </tr>
+                            <tr>
+                                <td>Ventas</td>
+                                <td>{{product.time_stats.max_monthsales}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <!-- TABLA MES MAYOR VENTAS -->
+        <div class="col s12 m6 l4">
+            <mat-card>
+                <mat-card-header>
+                    <div mat-card-avatar>
+                        <i class="fas fa-balance-scale fa-2x purple-text text-accent-4"></i>
+                    </div>
+                    <mat-card-title>Rendimiento</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>Mes Mayor Rendimiento</td>
+                                <td>{{product.time_stats.max_throwput_month}}</td>
+                            </tr>
+                            <tr>
+                                <td>Rendimiento</td>
+                                <td>{{product.time_stats.max_monththrowput}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+    <div class="row">
         <div class="col s12">
             <mat-card>
                 <mat-card-header>
                     <mat-card-title>Detalles mensuales</mat-card-title>
-                    <mat-card-subtitle>
-                        Genera detalles mensuales. Hacerlo te permitirá tener mejores resultados en las predicciones de tus ventas
-                    </mat-card-subtitle>
                 </mat-card-header>
-                <mat-card-content>
-                    <button mat-raised-button color="primary"
-                    (click)="loadMonthDetails()"
-                    >Generar detalles</button>
-                    <ng-container *ngIf="product.month_details">
-                        <div class="row">
-                            <div class="col s12">
-                                <p>Promedio de ventas mensuales: {{product.month_details.avgsales_per_month}}</p>
-                            </div>
-                        </div>
-                        <img mat-card-image [src]="product.month_details.month_sales_chart" alt="Detalles mensuales">
-                    </ng-container>
-                    </mat-card-content>
-
+                <img mat-card-image [src]="product.time_stats.files.month_sales_chart" alt="Detalles mensuales">
             </mat-card>
         </div>
     </div>

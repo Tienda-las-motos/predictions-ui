@@ -8,6 +8,7 @@ import { CacheService } from './cache.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ProductModel } from '../models/product.model';
 import { TablesService } from './tables.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
     providedIn: 'root',
@@ -16,7 +17,7 @@ export class ProductsService {
 
     productsFS$: Observable<ProductModel[]>
     loadProduct$: Subject<string> = new Subject();
-    APIurl: string = 'https://sales-predict.uc.r.appspot.com/'
+    APIurl: string = environment.apiURL
     constructor (
         private _http: HttpClient,
         private _cache: CacheService,
@@ -85,8 +86,8 @@ export class ProductsService {
         let productDoc = await this._fs.doc( `tables/${ tableId }/products/${ productId }` ).ref.get()
 
         let product: ProductModel = productDoc.data() as ProductModel
-        product.stats.time_data.first_sale_date = productDoc.data()['stats'].time_data.first_sale_date.toDate()
-        product.stats.time_data.last_sale_date = productDoc.data()['stats'].time_data.last_sale_date.toDate()
+        product.time_stats.first_sale = productDoc.data()['time_stats'].first_sale.toDate()
+        product.time_stats.last_sale = productDoc.data()['time_stats'].last_sale.toDate()
         return product
     }
 }

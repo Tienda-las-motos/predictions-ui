@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MaterialModule } from 'src/app/material.module';
+import { MaterialModule } from 'src/app/shared/material.module';
 import { LoginButtonComponent, LoginButtonDialog } from './components/login-button/login-button.component';
 import { LoginCardComponent } from './components/login-card/login-card.component';
 import { ColorThemeModule } from '../color/color-theme.module';

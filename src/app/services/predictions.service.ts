@@ -1,18 +1,19 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { PredictionResults, PredictionForm } from '../models/predictions.model';
+import { PredictionResults, PredictionForm, RegressionForm, InverseRegForm } from '../models/predictions.model';
 import { Observable, throwError } from 'rxjs';
 import { tap, map, catchError } from 'rxjs/operators';
 import { ApiResponse } from '../models/response.model';
 import { AlertService } from './alerts/alert.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
     providedIn: 'root',
 })
 export class PredictionsService {
     
-    APIurl: string = 'https://sales-predict.uc.r.appspot.com'
+    APIurl: string = environment.apiURL
     constructor (
         private _fs: AngularFirestore,
         private _http: HttpClient,
@@ -33,6 +34,47 @@ export class PredictionsService {
             return false
         }
 
+    }
+
+
+    makeRegressionSimple( requestForm: RegressionForm ): Observable<any> {
+        const headers: HttpHeaders = new HttpHeaders( {
+            'ContentType': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'Accept': 'application/json'
+        } );
+
+        return this._http.get(`${this.APIurl}/api/predictions/cant-predict?table=${requestForm.table}&product=${requestForm.product}&months=${requestForm.months}`).pipe(
+            tap( ( response ) => console.log( response ) ),
+            map( ( response: ApiResponse ) => {
+                if ( response.status !== 200 ) {
+                    this._alert.sendMessageAlert( response.message )
+                    // this._cache.updateData( 'currentProduct', response.result )
+                }
+                return response.result
+            } ),
+            catchError( error => throwError( error ) )
+        )
+    }
+
+    makeInverseReg( requestForm: InverseRegForm ): Observable<any> {
+        const headers: HttpHeaders = new HttpHeaders( {
+            'ContentType': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'Accept': 'application/json'
+        } );
+
+        return this._http.get(`${this.APIurl}/api/predictions/month-predict?table=${requestForm.table}&product=${requestForm.product}&cant=${requestForm.cant}`).pipe(
+            tap( ( response ) => console.log( response ) ),
+            map( ( response: ApiResponse ) => {
+                if ( response.status !== 200 ) {
+                    this._alert.sendMessageAlert( response.message )
+                    // this._cache.updateData( 'currentProduct', response.result )
+                }
+                return response.result
+            } ),
+            catchError( error => throwError( error ) )
+        )
     }
 
 

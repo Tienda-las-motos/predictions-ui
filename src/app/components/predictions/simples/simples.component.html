@@ -1,0 +1,106 @@
+<div class="row">
+    <div class="col s12">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Predicciones simples</mat-card-title>
+                <mat-card-subtitle>
+                    En esta sección podrás realizar predicciones simples basado en el historial de ventas. Se trata de una <b>Regresión Simple Matemática</b> comparando ventas en cada mes. Podrás consultar cuántas unidades se venden en cierto tiempo, o una <b>regresión inversa</b> para consultar cuantos meses tardas en verdad cierta cantidad.
+                </mat-card-subtitle>
+            </mat-card-header>
+
+            <mat-card-content>
+                <div class="row">
+                    <!-- FORMULARIO -->
+                    <div class="col s12 m6">
+                        <form action="#" [formGroup]="monthform">
+                            <div class="row">
+                                <div class="col s12 request-area">
+                                    <mat-form-field appearance="outline">
+                                        <mat-hint>
+                                            Indica la cantidad de meses que quieres consultar la cantidad estimada de unidades que se venderán. <span class="orange-text text-darken-4">
+                                                El valor mínimo es 1 mes y máxmo 12 meses
+                                            </span>
+                                        </mat-hint>
+                                        <mat-label>Meses</mat-label>
+                                        <input
+                                            matInput
+                                            type="number"
+                                            name="test_size"
+                                            [formControl]="months"
+                                            max="12"
+                                            min="1"
+                                            required
+                                        />
+                                        <mat-error *ngIf="months.invalid">
+                                            {{getMonthsError()}}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                
+                                <div class="col s12">
+                                    <button
+                                        mat-raised-button
+                                        color="primary"
+                                        [disabled]="!monthform.valid"
+                                        (click)="makeRegression()"
+                                    >
+                                        Obtener resultado
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row" *ngIf="results.predicted_cant">
+                                <div class="col s12" *ngIf="months.pristine">
+                                    <p><b>Se venderán {{results.predicted_cant}} en {{months.value}} </b></p>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- RESULTADOS -->
+                    <div class="col s12 m6">
+                        <form action="#" [formGroup]="cantform">
+                            <div class="row">
+                                <div class="col s12 request-area">
+                                    <mat-form-field appearance="outline">
+                                        <mat-hint
+                                            >Puedes indicar la cantidad que deseas saber en cuánto tiempo se venderán. La certeza de esta predicción, dependerá de la cantidad de datos con la que se cuente.
+                                        </mat-hint>
+                                        <mat-label>Cantidad</mat-label>
+                                        <input
+                                            matInput
+                                            type="number"
+                                            name="window_size"
+                                            [formControl]="cant"
+                                            max="10"
+                                            min="2"
+                                            required
+                                        />
+                                        <mat-error *ngIf="cant.invalid">
+                                            {{getCantError()}}
+                                        </mat-error>
+                                                
+                                    </mat-form-field>
+                                </div>
+                                <div class="col s12">
+                                    <button
+                                        mat-raised-button
+                                        color="primary"
+                                        [disabled]="!cantform.valid"
+                                        (click)="makeInverseReg()"
+                                    >
+                                        Obtener resultado
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row" *ngIf="results.months_cant">
+                                <div class="col s12" *ngIf="cant.pristine" >
+                                    <p> <b>{{cant.value}} unidades se venderán en {{results.months_cant}} meses </b></p>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

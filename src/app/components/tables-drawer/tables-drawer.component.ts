@@ -29,7 +29,7 @@ export class TablesDrawerComponent implements OnInit {
         this._loading.getRouteParams().subscribe( params => {
             this.selected = params[ 'table' ]
             let table = this._cache.getDataKey( 'currentTable' )
-            if ( table[ 'data' ].doc_id !== this.selected ) {
+            if ( table && table[ 'data' ].doc_id !== this.selected ) {
                 if ( this.selected ) {
                     console.log('getSelected')
                     this.tables_.getTable(this.selected).subscribe()
@@ -52,6 +52,7 @@ export class TablesDrawerComponent implements OnInit {
                 this._loading.toggleWaitingSpinner(false)
                 this._alerts.sendMessageAlert( `Se cargaron ${ result.total_count } de la tabla ${ result.file_name }` )
                     .subscribe( () => {
+                        console.log( 'acepato' )
                         console.log('Rediirje a ', `/dashboard/table/${ tableId }`)
                         this._router.navigate( [ `/dashboard/table/${ tableId }` ] )
                 })

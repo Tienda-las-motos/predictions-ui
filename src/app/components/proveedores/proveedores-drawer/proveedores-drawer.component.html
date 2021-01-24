@@ -1,0 +1,22 @@
+<!-- <span class="drawer-title">
+    <mat-toolbar color="accent">
+        <span>Proveedores</span>
+    </mat-toolbar>
+</span> -->
+    <div
+        class="row prov-row"
+        *ngFor="let prov of providers"
+        [ngClass]="{ 'selected': selected == prov.query.provider }"
+        (click)="selectProvider(prov.query.provider)"
+    >
+        <div class="col s12" >
+            <p>{{ prov.query.provider }} <br>
+                <span style="font-size: xx-small;">
+                    {{text_.stringifyShortDate(prov.queried.toDate())}} 
+                    -
+                    {{text_.stringifyTime(prov.queried.toDate())}}
+                </span>
+            </p>
+        </div>
+    </div>
+

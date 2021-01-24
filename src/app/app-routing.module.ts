@@ -6,6 +6,7 @@ import { PredictionsComponent } from './components/predictions/predictions.compo
 import { ProductBlankComponent } from './components/product-blank/product-blank.component';
 import { ProductDetailsComponent } from './components/product-view/product-details/product-details.component';
 import { ProductViewComponent } from './components/product-view/product-view.component';
+import { ProveedoresComponent } from './components/proveedores/proveedores.component';
 import { TablesComponent } from './components/tables/tables.component';
 
 
@@ -18,7 +19,9 @@ const routes: Routes = [
             { path: 'product/:product', component: ProductViewComponent, children: [
                 { path:'', pathMatch:'full',redirectTo:'detalles'},
                 { path: 'detalles', component: ProductDetailsComponent },
-                { path: 'predicciones', component: PredictionsComponent }
+                { path: 'predicciones', component: PredictionsComponent },
+                { path: 'proveedores', component: ProveedoresComponent },
+                { path: 'proveedores/:prov', component: ProveedoresComponent },
             ]}
         ]},
     ]

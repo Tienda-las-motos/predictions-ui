@@ -34,13 +34,13 @@ export class AlertService {
         
         if (!msgModel.trueMsg) msgModel.trueMsg = 'aceptar'
 
-        this.dialog.open( AlertaPopupComponent, {
+        var dialog = this.dialog.open( AlertaPopupComponent, {
             minWidth: '450px',
             data: msgModel,
             role:'alertdialog'
         })
         
-        return this.responseAlert$
+        return dialog.afterClosed()
     }
 
 

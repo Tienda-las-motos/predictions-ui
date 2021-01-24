@@ -10,6 +10,7 @@ import { AlertService } from './alerts/alert.service';
 import { ProductItemList } from '../models/product.model';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { TableData } from '../models/table.model';
+import { environment } from '../../environments/environment';
 
 
 @Injectable({
@@ -17,7 +18,7 @@ import { TableData } from '../models/table.model';
 })
 export class TablesService {
 
-    APIurl: string = 'https://sales-predict.uc.r.appspot.com/'
+    APIurl: string = environment.apiURL
     tables$: Observable<TableData[]>
     tableList$: Observable<ProductItemList[]>
     tableLoaded$: Subject<any> = new Subject()

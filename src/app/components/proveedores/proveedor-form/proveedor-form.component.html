@@ -1,0 +1,172 @@
+<div class="row">
+    <div class="col s12">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Agrega proveedor</mat-card-title>
+                <mat-card-subtitle>Puedes consultar la oferta de un proveedor y registrarla en un historial. <span class="orange-text">NOTA:</span> Cuando guardas un proveedor con el mismo nombre, se sobre escribe la consulta anterior.</mat-card-subtitle>
+            </mat-card-header>
+
+            <mat-card-content>
+                <div class="row">
+                    
+                    <div class="col s12 m6">
+                        <form action="#" [formGroup]="provForm" >
+                            <div class="row">
+                                <div class="col s12">
+                                    <!-- NOMBRE DEL PROVEEDOR -->
+                                    <mat-form-field appearance="outline">
+                                        <mat-hint>Anota el nombre con el que registrarás el proveedor</mat-hint>
+                                        <mat-label>Nombre de proveedor</mat-label>
+                                        <input matInput type="text" name="provider" id="provider"
+                                        [formControl]="providerControl">
+                                        <mat-error *ngIf="providerControl.invalid">
+                                            Este valor es necesario
+                                        </mat-error>
+                                    </mat-form-field>
+                                    <!-- DESCUENTO -->
+                                    <mat-form-field appearance="outline">
+                                        <mat-hint>El descuento ofrecido por el proveedor en caso de adquirir la cantidad condición, puede quedar en 0</mat-hint>
+                                        <mat-label>Descuento</mat-label>
+                                        <input matInput type="number" name="desc" id="desc"
+                                        [formControl]="descControl">
+                                        <mat-error *ngIf="descControl.invalid">
+                                            Este valor es necesario, si no hay descuento, puedes dejarlo en 0
+                                        </mat-error>
+                                    </mat-form-field>
+                                    <!-- CONDICIÓN DE COMPRA -->
+                                    <mat-form-field appearance="outline">
+                                        <mat-hint>Condición de compra que el proveedor te solicita o cantidad que se desea adquirir</mat-hint>
+                                        <mat-label>Cantidad condicion</mat-label>
+                                        <input matInput type="number" name="condition" id="condition"
+                                        [formControl]="conditionControl" >
+                                        <mat-error *ngIf="conditionControl.invalid">
+                                            Este valor es necesario
+                                        </mat-error>
+                                    </mat-form-field>
+                                    <!-- STOCK -->
+                                    <mat-form-field appearance="outline">
+                                        <mat-hint>Stock actual en tus inventarios para sumarlo a la oferta y tener un control de las cantidades y tiempos de venta</mat-hint>
+                                        <mat-label>Stock</mat-label>
+                                        <input matInput type="text" name="stock" id="stock"
+                                        [formControl]="stockControl">
+                                        <mat-error *ngIf="stockControl.invalid">
+                                            Este valor es necesario
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col s12">
+                                    <button mat-raised-button color="primary"
+                                    (click)="evaluate()">Analizar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="col s12 m6">
+                        <mat-card class="mat-elevation-z0 results-card"
+                        *ngIf="(provider | async) as provider">
+                            <mat-card-header>
+                                <mat-card-subtitle>Resultados</mat-card-subtitle>
+                            </mat-card-header>
+                            
+                            <mat-card-content>
+                                <div class="row">
+                                    <div class="col s12">
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Precio de compra sugerido</td>
+                                                    <td>$<b>{{provider.result.suggest_buy_price | mask:'separator':','}}</b></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Precio de venta sugerido</td>
+                                                    <td>$<b>{{provider.result.suggest_sale_price | mask:'separator':','}}</b></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Precio de compra con desc</td>
+                                                    <td>$<b>{{provider.result.desc_price | mask:'separator':','}}</b></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Ahorro por unidad</td>
+                                                    <td>$<b>{{provider.result.saving | mask:'separator':','}}</b></td>
+                                                </tr>
+                                                
+        
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col s12">
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Capital de stock</td>
+                                                    <td>$<b>{{provider.result.invested_capital | mask:'separator':','}}</b></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Inversión solicitada</td>
+                                                    <td>$<b>{{provider.result.invest | mask:'separator':','}}</b></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Inversión total</td>
+                                                    <td>$<b>{{provider.result.total_invest | mask:'separator':','}}</b></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Ahorro total de la inverión</td>
+                                                    <td>$<b>{{provider.result.total_saving | mask:'separator':','}}</b></td>
+                                                </tr>
+                                                
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col s12">
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Ganancias</td>
+                                                    <td>$<b>{{provider.result.profits | mask:'separator':','}}</b></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Utilidad</td>
+                                                    <td>$<b>{{provider.result.utilities}}</b></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Margen de Utilidad</td>
+                                                    <td><b>{{provider.result.percent_utilities}}</b>%</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col s12">
+                                        <p class="evaluate" *ngIf="provider.result.message">
+                                            <ng-container *ngIf="provider.result.viability; else noViable">
+                                                <i class="fas fa-check-circle green-text"></i>
+                                            </ng-container>
+                                            <ng-template #noViable>
+                                                <i class="fas fa-times-circle red-text"></i>
+                                            </ng-template>
+                                             {{provider.result.message}}
+                                        </p>
+                                        
+                                    </div>
+                                </div>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

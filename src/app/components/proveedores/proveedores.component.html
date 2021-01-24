@@ -1,0 +1,14 @@
+<mat-drawer-container>
+    <mat-drawer #proveedoresList
+    position="push"
+    mode="side"
+    opened=true
+    class="drawer prov-drawer">
+        <app-proveedores-drawer></app-proveedores-drawer>
+    </mat-drawer>
+    <mat-drawer-content>
+        <div class="container">
+            <app-proveedor-form></app-proveedor-form>
+        </div>
+    </mat-drawer-content>
+</mat-drawer-container>

@@ -46,8 +46,9 @@ export class ProductsDrawerComponent implements OnInit {
    }
 
     ngOnInit(): void {
-        this.tables_.tableList$.subscribe( (data: ProductItemList[]) => {
-            this.productList = data.map( p => { return {...p, descripcion: p.descripcion.toLowerCase()}})
+        this.tables_.tableList$.subscribe( ( data: ProductItemList[] ) => {
+            // console.log( data )
+            this.productList = data.map( p => { return {...p, Descripcion: p.Descripcion.toLowerCase()}})
         })
         this.filteredProducts = this.listControl.valueChanges
         .pipe(
@@ -61,7 +62,7 @@ export class ProductsDrawerComponent implements OnInit {
 
     private _filter(value: string): ProductItemList[] {
         const filterValue = value.toLowerCase();
-        return this.productList.filter(option => option.descripcion.toLowerCase().includes(filterValue));
+        return this.productList.filter(option => option.Descripcion.toLowerCase().includes(filterValue));
     }
 
     selectProduct() {

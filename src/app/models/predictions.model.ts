@@ -20,3 +20,22 @@ export interface PredictionForm {
     window_size?: number
 
 }
+
+export interface RegressionForm {
+    table: string, 
+    product: string,
+    months: number,
+}
+
+export interface InverseRegForm {
+    table: string, 
+    product: string,
+    cant: number,
+}
+
+
+
+export interface RegressionResults {
+    predicted_cant?: number,
+    months_cant?: number,
+}

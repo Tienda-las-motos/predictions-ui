@@ -39,8 +39,6 @@ export class EstimatedComponent implements OnInit {
 
     ngOnInit(): void {
         this.loadLastPrediction()
-        console.log(this.productId, this.tableId);
-        
      }
     
     async loadLastPrediction() {
@@ -90,10 +88,10 @@ export class EstimatedComponent implements OnInit {
         }
         console.log(request);
         
-        // this._predictions.makeEstimatedPrediction( request )
-        //     .subscribe( result => {
-        //         this._loading.toggleWaitingSpinner( false )
-        //         if (result) this.results = result
-        //     })
+        this._predictions.makeEstimatedPrediction( request )
+            .subscribe( result => {
+                this._loading.toggleWaitingSpinner( false )
+                if (result) this.results = result
+            })
     }
 }

@@ -7,9 +7,9 @@ import { LoadingModule } from './services/loading/loading.module';
 
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FirebaseModule } from './firebase.module';
-import { ComunesModule } from './comunes.module';
-import { MaterialModule } from './material.module';
+import { FirebaseModule } from './shared/firebase.module';
+import { ComunesModule } from './shared/comunes.module';
+import { MaterialModule } from './shared/material.module';
 
 import { NgxMaskModule, IConfig } from 'ngx-mask'
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
@@ -31,6 +31,10 @@ import { GdevAlertModule } from './services/alerts/gdev-alert.module';
 import { TablesComponent } from './components/tables/tables.component';
 import { GdevLoginModule } from './services/gdev-login/gdev-login.module';
 import { LoginComponent } from './components/login/login.component';
+import { SimplesComponent } from './components/predictions/simples/simples.component';
+import { ProveedoresComponent } from './components/proveedores/proveedores.component';
+import { ProveedorFormComponent } from './components/proveedores/proveedor-form/proveedor-form.component';
+import { ProveedoresDrawerComponent } from './components/proveedores/proveedores-drawer/proveedores-drawer.component';
 
 @NgModule({
     declarations: [
@@ -48,6 +52,10 @@ import { LoginComponent } from './components/login/login.component';
         UploadTableComponent,
         TablesComponent,
         LoginComponent,
+        SimplesComponent,
+        ProveedoresComponent,
+        ProveedorFormComponent,
+        ProveedoresDrawerComponent,
     ],
     imports: [
         BrowserModule.withServerTransition({ appId: 'serverApp' }),

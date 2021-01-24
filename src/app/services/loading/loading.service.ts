@@ -75,7 +75,7 @@ export class Loading {
             map((route) => {
                 const data = { data: {}, params: {}, queryParams: {} };
 
-                while (route.firstChild) {
+                while (route) {
                     data.data = {
                         ...data.data,
                         ...route.snapshot.data,

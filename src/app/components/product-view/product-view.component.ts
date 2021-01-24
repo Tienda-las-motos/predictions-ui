@@ -5,6 +5,7 @@ import { TextService } from 'src/app/services/gdev-text.service';
 import { Loading } from 'src/app/services/loading/loading.service';
 import { ProductsService } from 'src/app/services/products.service';
 import { distinctUntilChanged } from 'rxjs/operators';
+import { CacheService } from 'src/app/services/cache.service';
 
 @Component({
     selector: 'app-product-view',
@@ -15,13 +16,13 @@ export class ProductViewComponent implements OnInit {
 
     product: ProductModel;
     time_data: TimeStats = {
-        first_sale_date: new Date(),
-        last_sale_date: new Date(),
-        period_in_days: 0
-    }
-    stats: ProductStats = {time_data: this.time_data}
+        first_sale: new Date(),
+        last_sale: new Date(),
 
-    sections: string[] = [ 'detalles', 'predicciones' ]
+    }
+    stats: ProductStats = {}
+
+    sections: string[] = [ 'detalles', 'predicciones', 'proveedores' ]
     activeLink = this.sections[ 0 ]
     
     tableId: string
@@ -31,9 +32,10 @@ export class ProductViewComponent implements OnInit {
         public text_: TextService,
         private _loading: Loading,
         private _products: ProductsService,
-        private _router: Router
+        private _router: Router,
+        private _cache: CacheService
     ) {
-        this.product = new ProductModel( '', '', this.stats );
+        this.product = new ProductModel( '', '','',{}, {}, {}, {}, '' );
         
         this._products.loadProduct$
             .pipe(distinctUntilChanged())
@@ -46,6 +48,8 @@ export class ProductViewComponent implements OnInit {
             let id = data.params[ 'product' ]
             this._products.loadProduct$.next( id )
             this.tableId = data.params[ 'table']
+            let currentRoute = `table/${this.tableId}/product/${id}`
+            this._cache.updateData('currentRoute', currentRoute)
         })
     }
 
@@ -63,11 +67,12 @@ export class ProductViewComponent implements OnInit {
     }
 
     get firstDate() {
-        
-        return this.text_.stringifyDate(this.product.stats.time_data.first_sale_date)
+        let date = this.product.time_stats.first_sale
+        return date ? this.text_.stringifyDate(date) : ''
     }
     get lastDate() {
-        return this.text_.stringifyDate(this.product.stats.time_data.last_sale_date)
+        let date = this.product.time_stats.last_sale
+        return date ? this.text_.stringifyDate(date) : ''
     }
 
     goBack() {

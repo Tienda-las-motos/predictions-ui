@@ -13,6 +13,7 @@ export class TopbarComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    // this.login_.user$.subscribe(user => console.log(user))
   }
 
 }
