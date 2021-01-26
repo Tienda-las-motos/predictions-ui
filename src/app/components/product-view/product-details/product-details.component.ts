@@ -52,6 +52,7 @@ export class ProductDetailsComponent implements OnInit {
             .subscribe( id => {
                 this._products.getProduct( id )
                     .then( product => this.product = product )
+                console.log( this.product )
             })
 
         this._loading.colectRouteData().subscribe( data => {

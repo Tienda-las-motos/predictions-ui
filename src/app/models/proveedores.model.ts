@@ -3,7 +3,8 @@ export class ProveedorModel {
     constructor (
         public query?: ProvRequest,
         public result?: ProvResult,
-        public queried?: any
+        public queried?: any,
+        public posible_sales_URL?: string
     ){}
 }
 

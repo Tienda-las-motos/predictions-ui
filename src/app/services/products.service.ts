@@ -87,7 +87,8 @@ export class ProductsService {
 
         let product: ProductModel = productDoc.data() as ProductModel
         product.time_stats.first_sale = productDoc.data()['time_stats'].first_sale.toDate()
-        product.time_stats.last_sale = productDoc.data()['time_stats'].last_sale.toDate()
+        product.time_stats.last_sale = productDoc.data()[ 'time_stats' ].last_sale.toDate()
+        console.log( product )
         return product
     }
 }

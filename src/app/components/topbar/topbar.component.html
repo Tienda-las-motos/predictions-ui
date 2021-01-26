@@ -10,7 +10,7 @@
             
             <div class="imgProfileContainer"
             [matMenuTriggerFor]="menuProfile">
-                <img src="{{user.photoURL}}" alt="img profile">
+                <img src="{{user.photoURL ? user.photoURL : 'assets/img/images.jfif'}}" alt="img profile">
             </div>
         </div>
     </mat-toolbar>

@@ -166,6 +166,14 @@
                         </mat-card>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="col s12" *ngIf="(provider |async ) as provider">
+                        <mat-card>
+                            <img mat-card-image [src]="provider.posible_sales_URL" alt="Gráfica de posibles ventas">
+                        </mat-card>
+                    </div>
+                </div>
             </mat-card-content>
         </mat-card>
     </div>

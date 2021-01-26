@@ -1,3 +1,15 @@
 .espacio {
     flex: 1 1 auto;
 }
+
+.imgProfileContainer {
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+    border-radius: 50%;
+    box-shadow: 2px -2px 3px rgba(0,0,0,0.5);
+    cursor: pointer;
+    img {
+        width:100%
+    }
+}

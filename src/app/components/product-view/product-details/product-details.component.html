@@ -14,16 +14,16 @@
                         <tbody>
                             <tr>
                                 <td>U. Vendidas</td>
-                                <td>{{product.product_stats.sold_units}}</td>
+                                <td>{{product.product_stats.sold_units | mask:'separator':','}}</td>
                             </tr>
                             <tr>
                                 <td>Ventas</td>
-                                <td>{{product.product_stats.sales_quantity}}</td>
+                                <td>{{product.product_stats.sales_quantity | mask:'separator':','}}</td>
                             </tr>
                             
                             <tr>
                                 <td>Promedio/Mes</td>
-                                <td>{{product.time_stats.avgsales_per_month}}</td>
+                                <td>{{product.time_stats.avgsales_per_month | mask:'separator':','}}</td>
                             </tr>
 
                         </tbody>
@@ -45,16 +45,16 @@
                         <tbody>
                             <tr>
                                 <td>Mínimo</td>
-                                <td>${{product.product_stats.min_buy_price }}</td>
+                                <td>${{product.product_stats.min_buy_price  | mask:'separator':','}}</td>
                             </tr>
                             <tr>
                                 <td>Promedio</td>
-                                <td>${{product.product_stats.avg_buy_price}}</td>
+                                <td>${{product.product_stats.avg_buy_price | mask:'separator':','}}</td>
                             </tr>
                             
                             <tr>
                                 <td>Sugerido</td>
-                                <td>${{product.buy_stats.suggest_buy_price}}</td>
+                                <td>${{product.buy_stats.suggest_buy_price | mask:'separator':','}}</td>
                             </tr>
                             
                         </tbody>
@@ -76,15 +76,15 @@
                         <tbody>
                             <tr>
                                 <td>Máximo</td>
-                                <td>${{product.product_stats.max_sale_price}}</td>
+                                <td>${{product.product_stats.max_sale_price | mask:'separator':','}}</td>
                             </tr>
                             <tr>
                                 <td>Promedio</td>
-                                <td>${{product.product_stats.avg_sale_price}}</td>
+                                <td>${{product.product_stats.avg_sale_price | mask:'separator':','}}</td>
                             </tr>
                             <tr>
                                 <td>Sugerido</td>
-                                <td>${{product.sell_stats.suggest_sale_price}}</td>
+                                <td>${{product.sell_stats.suggest_sale_price | mask:'separator':','}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -113,7 +113,7 @@
                             </tr>
                             <tr>
                                 <td>Precio max rend</td>
-                                <td>${{product.sell_stats.max_throwput_sale_price}}</td>
+                                <td>${{product.sell_stats.max_throwput_sale_price | mask:'separator':','}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -129,7 +129,28 @@
                 <mat-card-header>
                     <mat-card-title>Ventas vs Costos</mat-card-title>
                 </mat-card-header>
-                <img mat-card-image [src]="product.time_stats.files.sales_chart" alt="Ventas vs Costos">
+                <img mat-card-image [src]="product.time_stats.files.salesvscosts_chart_URL" alt="Ventas vs Costos">
+            </mat-card>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col s12 m6">
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>Precios de venta</mat-card-title>
+                    <mat-card-subtitle>Muestra gráficamente el comportamiento de los precios de venta y en color azul el precio sugerido de venta</mat-card-subtitle>
+                </mat-card-header>
+                <img mat-card-image [src]="product.sell_stats.suggest_sale_price_img" alt="Precio sugerido de venta">
+            </mat-card>
+        </div>
+        <div class="col s12 m6">
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>Precios de compra</mat-card-title>
+                    <mat-card-subtitle>Muestra gráficamente el comportamiento de los precios de compra y en color azul el precio sugerido de compra</mat-card-subtitle>
+                </mat-card-header>
+                <img mat-card-image [src]="product.buy_stats.suggest_buy_price_URL" alt="Precio sugerido de compra">
             </mat-card>
         </div>
     </div>
@@ -193,7 +214,7 @@
                 <mat-card-header>
                     <mat-card-title>Detalles mensuales</mat-card-title>
                 </mat-card-header>
-                <img mat-card-image [src]="product.time_stats.files.month_sales_chart" alt="Detalles mensuales">
+                <img mat-card-image [src]="product.time_stats.files.boxchart_URL" alt="Detalles mensuales">
             </mat-card>
         </div>
     </div>

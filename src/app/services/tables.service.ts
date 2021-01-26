@@ -40,23 +40,23 @@ export class TablesService {
         let formData = new FormData()
         formData.append('dataset', file)
 
+        
         var headers: HttpHeaders = new HttpHeaders( {
             'ContentType': 'multipart/form-data',
             'Access-Control-Allow-Origin': '*',
             'Accept': 'application/json'
         } );
 
-        return this._http.post( this.APIurl+'api/load-file', formData )
+        return this._http.post( this.APIurl+'/api/load-file', formData, { headers:headers} )
             .pipe(
                 map( ( response: ApiResponse ) => {
-                    if ( response.status === 200 ) {
+                    if ( response.status === 201 ) {
                         this._cache.updateData( 'currentTable', response.result )
                     } else {
                         this._alert.sendMessageAlert(response.message)
                     }
                     return response.result
-                }),
-                catchError(error => throwError(error))
+                })
         )
     }
 
@@ -77,7 +77,7 @@ export class TablesService {
 
     getTable( tableId ): Observable<any> {
         
-        return this._http.get( `${this.APIurl}api/table?table=${tableId}` ).pipe(
+        return this._http.get( `${this.APIurl}/api/table?table=${tableId}` ).pipe(
             tap( (response)=> console.log(response)),
             map( ( response: ApiResponse ) => {
                 if ( response.status === 200 ) {

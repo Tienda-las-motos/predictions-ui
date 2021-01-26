@@ -39,15 +39,15 @@ export interface SellStats {
     max_throwput_sale_price?:number
     score_error2?:number
     suggest_sale_price?:number
-    suggest_sale_price_img?: string
+    suggest_sale_price_img?: string,
 }
 
 export interface TimeStats {
     avgsales_per_month?: number
     files?:{
         month_sales?: string
-        month_sales_chart?: string
-        sales_chart?: string
+        boxchart_URL?: string
+        salesvscosts_chart_URL?: string
         sales_dates?: string
         timeline?: string
     }

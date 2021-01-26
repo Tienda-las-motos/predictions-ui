@@ -34,6 +34,16 @@ export class UploadTableComponent implements OnInit {
     upload() {
         this._loading.toggleWaitingSpinner( true )
         this._tables.uploadTable( this.loadedFile )
-            .subscribe( (result) => this.dialog_.close(result.data) )
+            .subscribe(
+                ( result ) => {
+                    this.dialog_.close( result.data )
+                    this._loading.toggleWaitingSpinner(false)
+                },
+                // error => {
+                //     console.log( error )
+                //     this._alert.sendError( 'Error al cargar el archivo: ', error )
+                //     this._loading.toggleWaitingSpinner(false)
+                // }
+            )
     }
 }
