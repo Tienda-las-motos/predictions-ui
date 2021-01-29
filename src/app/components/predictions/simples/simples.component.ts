@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 import { PredictionsService } from '../../../services/predictions.service';
 import { Loading } from '../../../services/loading/loading.service';
 import { InverseRegForm, RegressionForm, RegressionResults } from 'src/app/models/predictions.model';
+import { AlertService } from 'src/app/services/alerts/alert.service';
 
 @Component({
   selector: 'app-simples',
@@ -27,7 +28,8 @@ export class SimplesComponent implements OnInit {
   constructor (
     public _formBuilder: FormBuilder,
     private _predictions: PredictionsService,
-    private _loading:Loading
+    private _loading: Loading,
+    private _alert: AlertService
     ) {
         this.monthform = _formBuilder.group( {
             'months': this.cant,
@@ -66,10 +68,16 @@ export class SimplesComponent implements OnInit {
       months: this.months.value
     }
 
+    this._loading.toggleWaitingSpinner(true)
     this._predictions.makeRegressionSimple( request )
       .subscribe( result => {
+        this._loading.toggleWaitingSpinner(false)
         this.results.predicted_cant = result.predicted_cant
         this.months.markAsPristine()
+      }, error => {
+          this._loading.toggleWaitingSpinner( false )
+          this._alert.sendError( 'Error en el servidor', error.message )
+          console.error(error.error)
     })
   }
 
@@ -80,10 +88,16 @@ export class SimplesComponent implements OnInit {
       cant: this.cant.value
     }
 
+    this._loading.toggleWaitingSpinner(true)
     this._predictions.makeInverseReg( request )
       .subscribe( result => {
+        this._loading.toggleWaitingSpinner(false)
         this.results.months_cant = result.months_cant
         this.cant.markAsPristine()
+    }, error => {
+      this._loading.toggleWaitingSpinner( false )
+      this._alert.sendError( 'Error en el servidor', error.message )
+      console.error(error.error)
     })
   }
 

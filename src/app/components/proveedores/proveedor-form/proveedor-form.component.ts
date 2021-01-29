@@ -7,6 +7,7 @@ import { ProveedoresService } from 'src/app/services/proveedores.service';
 import { ProvRequest } from '../../../models/proveedores.model';
 import { Observable } from 'rxjs';
 import { CacheService } from 'src/app/services/cache.service';
+import { AlertService } from 'src/app/services/alerts/alert.service';
 
 @Component({
   selector: 'app-proveedor-form',
@@ -34,6 +35,7 @@ export class ProveedorFormComponent implements OnInit {
     private _loading: Loading,
     private _router: Router,
     private _cache: CacheService,
+    private _alert: AlertService
   ) {
     
     this._loading.colectRouteData().subscribe( data => {
@@ -75,11 +77,18 @@ export class ProveedorFormComponent implements OnInit {
       stock: this.stockControl.value
     }
 
+    const currentRoute = this._cache.getDataKey('currentRoute')
+    this._loading.toggleWaitingSpinner(true)
     this._proveedores.evaluateProveedor( request )
-    .subscribe( () => {
+      .subscribe( () => {
+        this._loading.toggleWaitingSpinner(false)
         if ( !this.providerName ) 
-        this._router.navigate(['./'+request.provider])
-      } )
+        this._router.navigate(['/dashboard/'+currentRoute+'/proveedores/', request.provider])
+      }, error => {
+          this._loading.toggleWaitingSpinner( false )
+          this._alert.sendError( 'Error en el servidor', error.message )
+          console.error(error.error)
+      })
     
   }
 

@@ -4,10 +4,9 @@ import { TableData } from 'src/app/models/table.model';
 import { AlertService } from 'src/app/services/alerts/alert.service';
 import { TablesService } from 'src/app/services/tables.service';
 import { UploadTableComponent } from './upload-table/upload-table.component';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Loading } from 'src/app/services/loading/loading.service';
-import { ClassGetter } from '@angular/compiler/src/output/output_ast';
-import { CacheService } from '../../services/cache.service';
+import { CacheService } from '../../../services/cache.service';
 
 @Component({
     selector: 'app-tables-drawer',
@@ -49,13 +48,10 @@ export class TablesDrawerComponent implements OnInit {
             this.tables_.getTable( tableId ).subscribe( ( result: TableData ) => {
                 this.selected = result.doc_id
                 this.tables_.tableLoaded$.next()
+                this._router.navigate( [ `/dashboard/table/${ tableId }` ] )
                 this._loading.toggleWaitingSpinner(false)
                 this._alerts.sendMessageAlert( `Se cargaron ${ result.total_count } de la tabla ${ result.file_name }` )
-                    .subscribe( () => {
-                        console.log( 'acepato' )
-                        console.log('Rediirje a ', `/dashboard/table/${ tableId }`)
-                        this._router.navigate( [ `/dashboard/table/${ tableId }` ] )
-                })
+                    
             })
         }
     }

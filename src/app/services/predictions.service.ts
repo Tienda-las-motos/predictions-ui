@@ -17,7 +17,7 @@ export class PredictionsService {
     constructor (
         private _fs: AngularFirestore,
         private _http: HttpClient,
-        private _alert: AlertService
+        private _alert: AlertService,
     ) { }
 
     async getLastPrediction(
@@ -40,11 +40,18 @@ export class PredictionsService {
     makeRegressionSimple( requestForm: RegressionForm ): Observable<any> {
         const headers: HttpHeaders = new HttpHeaders( {
             'ContentType': 'application/json',
-            'Access-Control-Allow-Origin': '*',
-            'Accept': 'application/json'
+            'Accept': 'application/json',
+            "Access-Control-Allow-Origin": '*',
         } );
 
-        return this._http.get(`${this.APIurl}/api/predictions/cant-predict?table=${requestForm.table}&product=${requestForm.product}&months=${requestForm.months}`).pipe(
+        headers.set( 'Content-Type', 'application/json' )
+        headers.set( 'Accept', 'application/json' )
+        headers.set( 'Access-Control-Allow-Origin', 'localhost:4200' )
+        
+        console.log( headers)
+
+        this
+        return this._http.get(`${this.APIurl}/api/predictions/cant-predict?table=${requestForm.table}&product=${requestForm.product}&months=${requestForm.months}`, {headers: headers}).pipe(
             tap( ( response ) => console.log( response ) ),
             map( ( response: ApiResponse ) => {
                 if ( response.status !== 200 ) {

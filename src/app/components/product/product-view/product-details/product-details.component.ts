@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import {  ProductModel, ProductStats } from 'src/app/models/product.model';
+import {  ProductModel, buy_stats, product_stats, time_stats, sell_stats } from 'src/app/models/product.model';
 import { CacheService } from 'src/app/services/cache.service';
 import { Loading } from 'src/app/services/loading/loading.service';
 import { ProductsService } from 'src/app/services/products.service';
 import { distinctUntilChanged } from 'rxjs/operators';
+import { SellStats } from '../../../../models/product.model';
 
 
 @Component({
@@ -15,28 +16,7 @@ import { distinctUntilChanged } from 'rxjs/operators';
 export class ProductDetailsComponent implements OnInit {
 
     product: ProductModel
-    avg_stats: ProductStats = {
-        sold_units: 0,
-        sales_quantity: 0,
-        min_buy_price: 0,
-        avg_buy_price: 0,
-        avg_sale_price: 0,
-        max_sale_price: 0,
-        avg_margin: 0,
-        max_margin: 0,
-    }
-    // monthDetails: MonthDetails = {
-    //     avgsales_per_month: 0,
-    //     max_sales: 0,
-    //     month_sales_chart: '',
-    // }
-    // stats: ProductStats = {
-    //     avgs: this.avg_stats,
-    //     files: {
-    //         'chart': ''
-    //     }
-    // }
-
+    
     tableId: string
 
     constructor (
@@ -44,7 +24,7 @@ export class ProductDetailsComponent implements OnInit {
         private _route: ActivatedRoute,
         private _loading: Loading,
     ) {
-        this.product = new ProductModel( '', '', '', {}, {}, {}, {}, '')
+        this.product = new ProductModel( '', '', '', buy_stats, product_stats, sell_stats, time_stats, '')
         
         this._loading.toggleWaitingSpinner( true )
         this._products.loadProduct$
@@ -52,7 +32,7 @@ export class ProductDetailsComponent implements OnInit {
             .subscribe( id => {
                 this._products.getProduct( id )
                     .then( product => this.product = product )
-                console.log( this.product )
+                // console.log( this.product )
             })
 
         this._loading.colectRouteData().subscribe( data => {

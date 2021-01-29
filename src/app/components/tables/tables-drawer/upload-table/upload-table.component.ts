@@ -4,7 +4,7 @@ import { ApiResponse } from 'src/app/models/response.model';
 import { AlertService } from 'src/app/services/alerts/alert.service';
 import { CacheService } from 'src/app/services/cache.service';
 import { TablesService } from 'src/app/services/tables.service';
-import { Loading } from '../../../services/loading/loading.service';
+import { Loading } from '../../../../services/loading/loading.service';
 
 @Component({
     selector: 'app-upload-table',

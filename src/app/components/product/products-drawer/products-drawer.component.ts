@@ -5,9 +5,10 @@ import { TablesService } from 'src/app/services/tables.service';
 import { Observable } from 'rxjs';
 import { startWith, map, tap } from 'rxjs/operators';
 import { CacheService } from 'src/app/services/cache.service';
-import { ProductsService } from '../../services/products.service';
+import { ProductsService } from '../../../services/products.service';
 import { Loading } from 'src/app/services/loading/loading.service';
 import { Router } from '@angular/router';
+import { AlertService } from 'src/app/services/alerts/alert.service';
 
 
 @Component({
@@ -30,6 +31,7 @@ export class ProductsDrawerComponent implements OnInit {
         public products_: ProductsService,
         private _loading: Loading,
         private _router: Router,
+        private _alert: AlertService
     ) {
         let table = this._cache.getDataKey( 'currentTable' )
         if ( table ) { this.tableId = table[ 'data' ].doc_id }
@@ -52,7 +54,6 @@ export class ProductsDrawerComponent implements OnInit {
         })
         this.filteredProducts = this.listControl.valueChanges
         .pipe(
-            tap(value => console.log(value)),
             startWith(''),
             map( value => this._filter( value ) ),
         )
@@ -68,11 +69,18 @@ export class ProductsDrawerComponent implements OnInit {
     selectProduct() {
         this._loading.toggleWaitingSpinner(true)
         this.products_.filterProduct( this.tableId, this.listControl.value )
-            .subscribe( (result: ProductModel) => {
+            .subscribe(
+                ( result: ProductModel ) => {
                 this._loading.toggleWaitingSpinner(false)
                 console.log( result )
                 this._router.navigate([`/dashboard/table/${this.tableId}/product/${result.code}`])
-        })
+                },
+                error => {
+                    this._loading.toggleWaitingSpinner(false)
+                    this._alert.sendError( 'Error del servidor', error.message )
+                    console.error( error.error )
+                }
+            )
     }
 
     navigateProduct( productId: string ) {

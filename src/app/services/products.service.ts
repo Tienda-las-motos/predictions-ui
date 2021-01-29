@@ -32,7 +32,7 @@ export class ProductsService {
 
 
     filterProduct(table: string, product: string): Observable<any> {
-        return this._http.get( `${this.APIurl}api/product/filter?table=${ table }&product=${ product }` )
+        return this._http.get( `${this.APIurl}/api/product/filter?table=${ table }&product=${ product }` )
             .pipe(
                 tap( (response)=> console.log(response)),
                 map( ( response: ApiResponse ) => {
@@ -43,7 +43,7 @@ export class ProductsService {
                     }
                     return response.result
                 }),
-                catchError(error => throwError(error))
+                
         )
     }
 

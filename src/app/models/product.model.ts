@@ -59,37 +59,43 @@ export interface TimeStats {
     max_throwput_month?: string[]
 }
 
-// export interface ProductStats {
-//     avgs?: AvgStats,
-//     time_data?: TimeStats,
-//     files?: StatsFiles
-//     }
-//     export interface StatsFiles {
-//         data_byperiods?: string,
-//         chart?: string,
-//         dataset?: string,
-//         timeline?: string
-//     }
-//     export interface TimeStats {
-//         first_sale_date?: Date,
-//         last_sale_date?: Date,
-//         period_in_days?: number
-//     }
-//     export interface AvgStats {
-//         sold_units?: number,
-//         sales_quantity?: number
-//         min_purch_price?: number,
-//         avg_purch_price?: number,
-//         avg_sell_price?: number,
-//         max_sell_price?: number,
-//         avg_margin?: number,
-//         max_margin?: number,
-//     }
+export const product_stats: ProductStats = {
+    sold_units: 0,
+    sales_quantity: 0,
+    min_buy_price: 0,
+    avg_buy_price: 0,
+    avg_sale_price: 0,
+    max_sale_price: 0,
+    avg_margin: 0,
+    max_margin: 0,
+}
+export const sell_stats: SellStats = {
+    avg_throwput_sale:0,
+    max_throwput_sale_price:0,
+    score_error2:0,
+    suggest_sale_price:0,
+    suggest_sale_price_img: '',
+}
 
-// export interface MonthDetails {
-//     avgsales_per_month?: number,
-//     max_sales?: number,
-//     month_sales_chart?: string,
-//     normalized_sells?: string,
-//     sales_dates?: string,
-// }
+export const time_stats: TimeStats = {
+    avgsales_per_month: 0,
+    files:{
+        month_sales: '',
+        boxchart_URL: '',
+        salesvscosts_chart_URL: '',
+        sales_dates: '',
+        timeline: '',
+    },
+    first_sale: new Date(),
+    last_sale: new Date(),
+    max_monthsales: 0,
+    max_monththrowput: 0,
+    max_sales_month: [],
+    max_throwput_month: [],
+}
+
+export const buy_stats: BuyStats = {
+    error_score2: 0,
+    suggest_buy_price: 0,
+    suggest_buy_price_URL: '',
+}
