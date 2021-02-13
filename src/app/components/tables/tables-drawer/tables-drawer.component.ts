@@ -7,6 +7,8 @@ import { UploadTableComponent } from './upload-table/upload-table.component';
 import { Router } from '@angular/router';
 import { Loading } from 'src/app/services/loading/loading.service';
 import { CacheService } from '../../../services/cache.service';
+import { EditTableComponent } from './edit-table/edit-table.component';
+import { table } from 'console';
 
 @Component({
     selector: 'app-tables-drawer',
@@ -55,6 +57,14 @@ export class TablesDrawerComponent implements OnInit {
             })
         }
     }
+
+    openEditTable(tableData: TableData) {
+        this._dialog.open( EditTableComponent, {
+            width: '50%', 
+            data : tableData
+        })
+    }
+    
 
     openUploadBox() {
         var dialog = this._dialog

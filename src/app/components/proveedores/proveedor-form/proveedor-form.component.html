@@ -53,6 +53,32 @@
                                             Este valor es necesario
                                         </mat-error>
                                     </mat-form-field>
+                                    <!-- BUY PRICE -->
+                                    <mat-form-field appearance="outline">
+                                        <mat-hint>Precio al que se desea o sugiere adquirir cada unidad</mat-hint>
+                                        <mat-label>Precio de compra</mat-label>
+                                        <input matInput type="text" name="stock" id="stock"
+                                        mask="separator"
+                                        prefix="$"
+                                        thousandSeparator=","
+                                        [formControl]="buyPriceControl">
+                                        <mat-error *ngIf="buyPriceControl.invalid">
+                                            Este valor es necesario
+                                        </mat-error>
+                                    </mat-form-field>
+                                    <!-- SALE PRICE -->
+                                    <mat-form-field appearance="outline">
+                                        <mat-hint>Precio al que se desea o sugiere vender</mat-hint>
+                                        <mat-label>Precio de venta</mat-label>
+                                        <input matInput type="text" name="stock" id="stock"
+                                        mask="separator"
+                                        prefix="$"
+                                        thousandSeparator=","
+                                        [formControl]="salePriceControl">
+                                        <mat-error *ngIf="salePriceControl.invalid">
+                                            Este valor es necesario
+                                        </mat-error>
+                                    </mat-form-field>
                                 </div>
                             </div>
                             <div class="row">

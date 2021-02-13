@@ -31,8 +31,14 @@ export class ProductsService {
     }
 
 
-    filterProduct(table: string, product: string): Observable<any> {
-        return this._http.get( `${this.APIurl}/api/product/filter?table=${ table }&product=${ product }` )
+    filterProduct( table: string, product: string ): Observable<any> {
+        
+        let currentTable = this._cache.getDataKey( 'currentTable' )
+        if ( currentTable ) {
+            table = currentTable['data']['doc_id']
+        }
+
+        return this._http.get( `${this.APIurl}/product/filter?table=${ table }&product=${ product }` )
             .pipe(
                 tap( (response)=> console.log(response)),
                 map( ( response: ApiResponse ) => {
@@ -49,7 +55,7 @@ export class ProductsService {
 
 
     getMonthDetails( table: string, product: string ): Observable<any> {
-        return this._http.get( `${this.APIurl}api/product/month-details?table=${ table }&product=${ product }` )
+        return this._http.get( `${this.APIurl}/product/month-details?table=${ table }&product=${ product }` )
             .pipe(
                 tap( (response)=> console.log(response)),
                 map( ( response: ApiResponse ) => {

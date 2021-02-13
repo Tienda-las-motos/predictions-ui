@@ -35,6 +35,7 @@ import { SimplesComponent } from './components/predictions/simples/simples.compo
 import { ProveedoresComponent } from './components/proveedores/proveedores.component';
 import { ProveedorFormComponent } from './components/proveedores/proveedor-form/proveedor-form.component';
 import { ProveedoresDrawerComponent } from './components/proveedores/proveedores-drawer/proveedores-drawer.component';
+import { EditTableComponent } from './components/tables/tables-drawer/edit-table/edit-table.component';
 
 @NgModule({
     declarations: [
@@ -56,6 +57,7 @@ import { ProveedoresDrawerComponent } from './components/proveedores/proveedores
         ProveedoresComponent,
         ProveedorFormComponent,
         ProveedoresDrawerComponent,
+        EditTableComponent,
     ],
     imports: [
         BrowserModule.withServerTransition({ appId: 'serverApp' }),

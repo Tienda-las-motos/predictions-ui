@@ -88,7 +88,7 @@ export class EstimatedComponent implements OnInit {
         }
         console.log(request);
         
-        this._predictions.makeEstimatedPrediction( request )
+        this._predictions.projectionByStats( request )
             .subscribe( result => {
                 this._loading.toggleWaitingSpinner( false )
                 if (result) this.results = result

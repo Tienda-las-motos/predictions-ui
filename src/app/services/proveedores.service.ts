@@ -32,7 +32,9 @@ export class ProveedoresService {
       'Accept': 'application/json'
     } );
   
-    return this._http.get(`${this.APIurl}/api/predictions/provider-offering?table=${request.table}&product=${request.product}&provider=${request.provider}&condition=${request.condition}&desc=${request.desc}&stock=${request.stock}` )
+    
+
+    return this._http.post(`${this.APIurl}/analyze/provider-offering`, request )
         .pipe(
             tap( ( response ) => console.log( response ) ),
             map( ( response: ApiResponse ) => {
@@ -78,6 +80,8 @@ export class ProveedoresService {
     desc: 0,
     stock: 0,
     condition: 0,
+    buy_price: 0,
+    sale_price:0
   }
 
   result: ProvResult = {

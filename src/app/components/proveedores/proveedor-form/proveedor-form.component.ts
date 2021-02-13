@@ -8,6 +8,8 @@ import { ProvRequest } from '../../../models/proveedores.model';
 import { Observable } from 'rxjs';
 import { CacheService } from 'src/app/services/cache.service';
 import { AlertService } from 'src/app/services/alerts/alert.service';
+import { ProductsService } from 'src/app/services/products.service';
+import { ProductModel } from 'src/app/models/product.model';
 
 @Component({
   selector: 'app-proveedor-form',
@@ -17,7 +19,8 @@ import { AlertService } from 'src/app/services/alerts/alert.service';
 export class ProveedorFormComponent implements OnInit {
 
   table: string
-  product: string
+  productId: string
+  product: ProductModel
   provider: Observable<ProveedorModel>
   providerName: string
 
@@ -26,6 +29,8 @@ export class ProveedorFormComponent implements OnInit {
   conditionControl: FormControl = new FormControl( '', [ Validators.required ] )
   descControl: FormControl = new FormControl( '', Validators.required )
   stockControl: FormControl = new FormControl( '', )
+  buyPriceControl: FormControl = new FormControl( '', Validators.required)
+  salePriceControl: FormControl = new FormControl( '', Validators.required)
 
   
 
@@ -35,15 +40,17 @@ export class ProveedorFormComponent implements OnInit {
     private _loading: Loading,
     private _router: Router,
     private _cache: CacheService,
-    private _alert: AlertService
+    private _alert: AlertService, 
+    private _products: ProductsService
   ) {
     
     this._loading.colectRouteData().subscribe( data => {
-      this.product = data.params[ 'product' ]
+      this.productId = data.params[ 'product' ]
       this.table = data.params[ 'table' ]
+      
       if ( data.params[ 'prov' ] ) {
         this.providerName = data.params[ 'prov' ]
-        let providerPath = `tables/${ this.table }/products/${ this.product }/providers_offers/${ this.providerName }`
+        let providerPath = `tables/${ this.table }/products/${ this.productId }/providers_offers/${ this.providerName }`
         this._cache.updateData('providerPath', providerPath)
         this.provider = this._proveedores.getCurrent( providerPath )
         this.provider.subscribe( data => {
@@ -58,23 +65,31 @@ export class ProveedorFormComponent implements OnInit {
       'condition': this.conditionControl,
       'desc': this.descControl,
       'stock': this.stockControl,
+      'buy_price': this.buyPriceControl, 
+      'sale_price': this.salePriceControl,
       'table': '',
       'product': ''
     })
    }
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    this.product = await this._products.getProduct( this.productId )
+    console.log( this.product )
+    this.buyPriceControl.setValue( this.product.buy_stats.suggest_buy_price )
+    this.salePriceControl.setValue( this.product.sell_stats.suggest_sale_price)
   }
 
 
   evaluate() {
     const request: ProvRequest = {
       table: this.table,
-      product: this.product,
+      product: this.productId,
       provider: this.providerControl.value,
       condition: this.conditionControl.value,
       desc: this.descControl.value,
-      stock: this.stockControl.value
+      stock: this.stockControl.value,
+      buy_price: this.buyPriceControl.value, 
+      sale_price: this.salePriceControl.value
     }
 
     const currentRoute = this._cache.getDataKey('currentRoute')

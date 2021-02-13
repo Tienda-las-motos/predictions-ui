@@ -15,6 +15,8 @@ export interface ProvRequest {
     desc: number
     stock: number
     condition: number
+    buy_price: number
+    sale_price: number
 }
 
 export interface ProvResult {

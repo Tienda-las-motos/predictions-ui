@@ -1,0 +1,24 @@
+<mat-dialog-content>
+    <mat-form-field appearance="outline">
+        <mat-label>Nombre de la tabla</mat-label>
+        <input
+        matInput
+        type="text"
+        name="tableName"
+        [formControl]="nameControl"
+        >
+        <mat-error *ngIf="nameControl.hasError">
+            Necesitas asignar un nombre a la tabla
+        </mat-error>
+    </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions
+style="display: flex; justify-content: space-around;">
+    <button mat-raised-button
+    (click)="dialog_.close()"
+    >Cancelar</button>
+    <button mat-raised-button
+    color="primary"
+    (click)="saveName()"
+    >Guardar</button>
+</mat-dialog-actions>

@@ -37,7 +37,7 @@ export class PredictionsService {
     }
 
 
-    makeRegressionSimple( requestForm: RegressionForm ): Observable<any> {
+    cantSalesProjection( requestForm: RegressionForm ): Observable<any> {
         const headers: HttpHeaders = new HttpHeaders( {
             'ContentType': 'application/json',
             'Accept': 'application/json',
@@ -51,7 +51,7 @@ export class PredictionsService {
         console.log( headers)
 
         this
-        return this._http.get(`${this.APIurl}/api/predictions/cant-predict?table=${requestForm.table}&product=${requestForm.product}&months=${requestForm.months}`, {headers: headers}).pipe(
+        return this._http.get(`${this.APIurl}/predictions/sales-cant?table=${requestForm.table}&product=${requestForm.product}&months=${requestForm.months}`, {headers: headers}).pipe(
             tap( ( response ) => console.log( response ) ),
             map( ( response: ApiResponse ) => {
                 if ( response.status !== 200 ) {
@@ -64,14 +64,14 @@ export class PredictionsService {
         )
     }
 
-    makeInverseReg( requestForm: InverseRegForm ): Observable<any> {
+    monthSalesProjection( requestForm: InverseRegForm ): Observable<any> {
         const headers: HttpHeaders = new HttpHeaders( {
             'ContentType': 'application/json',
             'Access-Control-Allow-Origin': '*',
             'Accept': 'application/json'
         } );
 
-        return this._http.get(`${this.APIurl}/api/predictions/month-predict?table=${requestForm.table}&product=${requestForm.product}&cant=${requestForm.cant}`).pipe(
+        return this._http.get(`${this.APIurl}/api/predictions/sales-month?table=${requestForm.table}&product=${requestForm.product}&cant=${requestForm.cant}`).pipe(
             tap( ( response ) => console.log( response ) ),
             map( ( response: ApiResponse ) => {
                 if ( response.status !== 200 ) {
@@ -85,15 +85,21 @@ export class PredictionsService {
     }
 
 
-    makeEstimatedPrediction( requestForm: PredictionForm ): Observable<any> {
+    projectionByStats( requestForm: PredictionForm ): Observable<any> {
         const headers: HttpHeaders = new HttpHeaders( {
             'ContentType': 'application/json',
             'Access-Control-Allow-Origin': '*',
             'Accept': 'application/json'
         } );
-        console.log(requestForm);
+        console.log( requestForm );
+        let body = {
+            "table":requestForm.table,
+            "product":requestForm.product,
+            "test_size":requestForm.test_size,
+            "window_size":requestForm.window_size
+        }
         
-        return this._http.get(`${this.APIurl}/api/predictions/estimated?table=${requestForm.table}&product=${requestForm.product}&test_size=${requestForm.test_size}&window_size=${requestForm.window_size}` )
+        return this._http.post(`${this.APIurl}/predictions/sales-stats`, body )
             .pipe(
                 tap( ( response ) => console.log( response ) ),
                 map( ( response: ApiResponse ) => {
@@ -116,7 +122,7 @@ export class PredictionsService {
         } );
         console.log(requestForm);
         
-        return this._http.get(`${this.APIurl}/api/predictions/arima?table=${requestForm.table}&product=${requestForm.product}&test_size=${requestForm.test_size}` )
+        return this._http.get(`${this.APIurl}/predictions/sales-seasonal?table=${requestForm.table}&product=${requestForm.product}&test_size=${requestForm.test_size}` )
             .pipe(
                 tap( ( response ) => console.log( response ) ),
                 map( ( response: ApiResponse ) => {

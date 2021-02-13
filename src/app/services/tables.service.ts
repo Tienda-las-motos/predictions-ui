@@ -11,6 +11,7 @@ import { ProductItemList } from '../models/product.model';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { TableData } from '../models/table.model';
 import { environment } from '../../environments/environment';
+import { AngularFireStorage } from '@angular/fire/storage';
 
 
 @Injectable({
@@ -28,7 +29,8 @@ export class TablesService {
         private _loading: Loading,
         private _cache: CacheService,
         private _alert: AlertService,
-        private _fs: AngularFirestore
+        private _fs: AngularFirestore,
+        private _storage: AngularFireStorage
     ) {
         this.loadCurrentTableList()
         this.getTables()
@@ -47,7 +49,7 @@ export class TablesService {
             'Accept': 'application/json'
         } );
 
-        return this._http.post( this.APIurl+'/api/load-file', formData, { headers:headers} )
+        return this._http.post( this.APIurl+'/file', formData, { headers:headers} )
             .pipe(
                 map( ( response: ApiResponse ) => {
                     if ( response.status === 201 ) {
@@ -77,7 +79,7 @@ export class TablesService {
 
     getTable( tableId ): Observable<any> {
         
-        return this._http.get( `${this.APIurl}/api/table?table=${tableId}` ).pipe(
+        return this._http.get( `${this.APIurl}/table?id=${tableId}` ).pipe(
             tap( (response)=> console.log(response)),
             map( ( response: ApiResponse ) => {
                 if ( response.status === 200 ) {
@@ -93,6 +95,9 @@ export class TablesService {
 
 
     deleteTable( tableId: string ) {
-
+        console.log( 'deleting table ' + tableId )
+        // this._storage.ref('').
+        // this._storage.storage.ref().child(`tables/${ tableId }/`).delete()
+        this._fs.doc( `tables/${ tableId }` ).delete()
     }
 }

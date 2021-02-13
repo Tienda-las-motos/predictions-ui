@@ -69,7 +69,7 @@ export class SimplesComponent implements OnInit {
     }
 
     this._loading.toggleWaitingSpinner(true)
-    this._predictions.makeRegressionSimple( request )
+    this._predictions.cantSalesProjection( request )
       .subscribe( result => {
         this._loading.toggleWaitingSpinner(false)
         this.results.predicted_cant = result.predicted_cant
@@ -89,7 +89,7 @@ export class SimplesComponent implements OnInit {
     }
 
     this._loading.toggleWaitingSpinner(true)
-    this._predictions.makeInverseReg( request )
+    this._predictions.projectionByStats( request )
       .subscribe( result => {
         this._loading.toggleWaitingSpinner(false)
         this.results.months_cant = result.months_cant
