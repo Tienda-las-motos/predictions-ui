@@ -9,6 +9,7 @@ import { ProductsService } from '../../../services/products.service';
 import { Loading } from 'src/app/services/loading/loading.service';
 import { Router } from '@angular/router';
 import { AlertService } from 'src/app/services/alerts/alert.service';
+import { TableData } from 'src/app/models/table.model';
 
 
 @Component({
@@ -31,12 +32,24 @@ export class ProductsDrawerComponent implements OnInit {
         public products_: ProductsService,
         private _loading: Loading,
         private _router: Router,
-        private _alert: AlertService
+        private _alert: AlertService,
     ) {
         let table = this._cache.getDataKey( 'currentTable' )
-        if ( table ) { this.tableId = table[ 'data' ].doc_id }
+        if ( table ) {
+            this.tableId = table[ 'data' ].doc_id
+        } else {
+            this._loading.toggleWaitingSpinner(true)
+            this._loading.colectRouteData().subscribe( data => {
+                this.tableId = data.params[ 'table' ]
+                this.tables_.getTable( this.tableId ).subscribe( () => {
+                    this.tables_.tableLoaded$.next()
+                    this._loading.toggleWaitingSpinner(false)
+                })
+             })
+        }
         this._loading.colectRouteData().subscribe( data => {
             this.selected = data.params[ 'product' ]
+
             // let product = this._cache.getDataKey( 'currentProduct' )
             // if ( product[ 'data' ].doc_id !== this.selected ) {
             //     if ( this.selected ) {
@@ -58,6 +71,9 @@ export class ProductsDrawerComponent implements OnInit {
             map( value => this._filter( value ) ),
         )
 
+        this._cache.listenForChanges( 'currentTable' ).subscribe( table => {
+            this.tableId = table['data'].doc_id
+        })
 
     }
 
@@ -84,6 +100,8 @@ export class ProductsDrawerComponent implements OnInit {
     }
 
     navigateProduct( productId: string ) {
+        // let table = this._cache.getDataKey( 'currentTable' )
+        // let tableId = table['data'].doc_id
         this.products_.loadProduct$.next(productId)
         this._router.navigate([`/dashboard/table/${this.tableId}/product/${productId}`])
     }

@@ -14,9 +14,9 @@ const routes: Routes = [
     {path: '', pathMatch:'full', redirectTo:'dashboard'},
     {path: 'dashboard', component:DashboardComponent, children: [
         { path: '', component:ProductBlankComponent},
-        { path: 'table/:table', component: TablesComponent, children: [
+        { path: 'table/:table', component: TablesComponent,  children: [
             { path: '', component:ProductBlankComponent},
-            { path: 'product/:product', component: ProductViewComponent, children: [
+            { path: 'product/:product', component: ProductViewComponent,  children: [
                 { path:'', pathMatch:'full',redirectTo:'detalles'},
                 { path: 'detalles', component: ProductDetailsComponent },
                 { path: 'predicciones', component: PredictionsComponent },
