@@ -1,46 +1,43 @@
 <span class="drawer-title">
-    <mat-toolbar color="accent">
-        <span>Productos</span>
-    </mat-toolbar>
+  <mat-toolbar color="accent">
+    <span>Productos</span>
+  </mat-toolbar>
 </span>
 <div class="row select-row">
-    <div class="col s12 center">
-        <form class="example-form">
-            <mat-form-field class="example-full-width">
-                <input
-                    type="text"
-                    placeholder="Elije un producto"
-                    matInput
-                    aria-label="Number"
-                    [formControl]="listControl"
-                    name="productSelected"
-                    [matAutocomplete]="auto"
-                />
-                <mat-autocomplete
-                    #auto="matAutocomplete"
-                    [panelWidth]="'fit-content'"
-                >
-                    <mat-option
-                        *ngFor="let item of filteredProducts | async"
-                        [value]="item.Codigo"
-                    >
-                        {{ item.Descripcion }}
-                    </mat-option>
-                </mat-autocomplete>
-            </mat-form-field>
-            <button mat-raised-button (click)="selectProduct()" color="primary">
-                Cargar
-            </button>
-        </form>
-    </div>
+  <div class="col s12 center">
+    <form class="example-form">
+      <mat-form-field class="example-full-width">
+        <input
+          type="text"
+          placeholder="Elije un producto"
+          matInput
+          aria-label="Number"
+          [formControl]="listControl"
+          name="productSelected"
+          [matAutocomplete]="auto"
+        />
+        <mat-autocomplete #auto="matAutocomplete" [panelWidth]="'fit-content'" [displayWith]="displayFn">
+          <mat-option
+            *ngFor="let item of filteredProducts | async"
+            [value]="item"
+          >
+            {{ item.Descripcion }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <button mat-raised-button (click)="selectProduct()" color="primary">
+        Cargar
+      </button>
+    </form>
+  </div>
 </div>
 <div
-    class="row prod-row"
-    *ngFor="let prod of products_.productsFS$ | async"
-    [ngClass]="{ selected: selected === prod.code }"
-    (click)="navigateProduct(prod.code)"
+  class="row prod-row"
+  *ngFor="let prod of products_.productsFS$ | async"
+  [ngClass]="{ selected: selected === prod.code }"
+  (click)="navigateProduct(prod.code)"
 >
-    <div class="col s12">
-        <p>{{ prod.name }}</p>
-    </div>
+  <div class="col s12">
+    <p>{{ prod.name }}</p>
+  </div>
 </div>

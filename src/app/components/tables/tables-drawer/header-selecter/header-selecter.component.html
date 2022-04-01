@@ -1,0 +1,14 @@
+<mat-form-field
+  appearance="outline">
+    <mat-label>Columna</mat-label>
+    <mat-select
+      placeholder="Elige la columna que corresponde"
+      (selectionChange)="onHeaderSelected($event)"
+      name="header">
+        <mat-option
+          *ngFor="let header of tables.unknownHeaders"
+          [value]="header">
+            {{header}}
+        </mat-option>
+      </mat-select>
+</mat-form-field>

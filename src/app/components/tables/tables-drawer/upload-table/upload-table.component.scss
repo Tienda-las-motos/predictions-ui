@@ -1,0 +1,43 @@
+.step-footer {
+  display: flex; 
+  justify-content: space-around
+}
+
+::ng-deep {
+  .mat-list-item-content {
+    justify-content: space-between;
+  }
+  app-header-selecter {
+    position: relative;
+    left: 10%;
+    mat-form-field {
+      transform: scale(.8);
+    }
+  }
+}
+
+.image-container img {
+  width: 100%;
+}
+
+.incorrect {
+  color: #b32323;
+  font-weight: bold;
+}
+
+.correct {
+  color: #0f920f;
+  font-weight: bold;
+}
+
+ul {
+  li {
+    list-style-type: square !important;
+  }
+}
+
+code {
+  background-color: #ccc;
+  border-radius: 3px;
+  padding: 1px 3px;
+}

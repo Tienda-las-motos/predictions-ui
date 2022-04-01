@@ -69,7 +69,8 @@ export class TablesDrawerComponent implements OnInit {
     openUploadBox() {
         var dialog = this._dialog
             .open( UploadTableComponent, {
-                width: '50%'
+                width: '50%',
+                maxHeight: '90%'
             } )
 
         dialog.afterClosed().subscribe( (result: TableData) => {

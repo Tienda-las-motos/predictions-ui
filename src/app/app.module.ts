@@ -36,6 +36,8 @@ import { ProveedoresComponent } from './components/proveedores/proveedores.compo
 import { ProveedorFormComponent } from './components/proveedores/proveedor-form/proveedor-form.component';
 import { ProveedoresDrawerComponent } from './components/proveedores/proveedores-drawer/proveedores-drawer.component';
 import { EditTableComponent } from './components/tables/tables-drawer/edit-table/edit-table.component';
+import { HeaderSelecterComponent } from './components/tables/tables-drawer/header-selecter/header-selecter.component';
+import { SynonymHeaderPipe } from './pipes/synonym-header.pipe';
 
 @NgModule({
     declarations: [
@@ -58,6 +60,8 @@ import { EditTableComponent } from './components/tables/tables-drawer/edit-table
         ProveedorFormComponent,
         ProveedoresDrawerComponent,
         EditTableComponent,
+        HeaderSelecterComponent,
+        SynonymHeaderPipe,
     ],
     imports: [
         BrowserModule.withServerTransition({ appId: 'serverApp' }),

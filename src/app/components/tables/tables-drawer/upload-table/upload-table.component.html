@@ -1,31 +1,128 @@
 <button mat-icon-button class="right" (click)="dialog_.close()">
-    <i class="fas fa-times fa-2x close"></i>
+  <i class="fas fa-times fa-2x close"></i>
 </button>
 <mat-dialog-content>
-    Puedes subir un archivo CSV con el registro de tus ventas que contenga las siguientes columnas:
-    <ul>
-        <li> <b>Fecha: </b>Fecha en la que se realizó la venta. </li>
-        <li> <b>Codigo: </b>El código de identificación del artículo vendido </li>
-        <li> <b>Descripcion: </b>Nombre o referencia del artículo vendido </li>
-        <li> <b>Unidades: </b>Cantidad de unidades vendidas.</li>
-        <li> <b>Unitario Venta: </b>precio unitario de venta</li>
-        <li> <b>Ventas: </b>Total de las ventas de esa transacción</li>
-        <li> <b>Costo Unitario: </b>precio unitario de costo de compra</li>
-        <li> <b>Total Costo: </b>Total de costo de las unidades vendidas</li>
-        <li> <b>Margen: </b>Diferencia entre el valor de las ventas menos el total del costo</li>
-        <li> <b>PorMargen: </b>El margen de ganancia </li>
-    </ul>
+  
+  <mat-horizontal-stepper [linear]="true" #stepper="matHorizontalStepper" >
+
+    <mat-step aria-label="1">
+      <ng-template matStepLabel>Introdución</ng-template>
+      <p>Deberás subir un archivo <strong>CSV separado por comas</strong> con el registro de eventos de tus ventas.</p>
+      <p>El archivo debe contener las siguientes columnas de datos por cada</p>
+      <ul type="square">
+        <li><b>Fecha: </b>Fecha en la que se realizó la venta. (Puede incluir horario)
+          <br> Formato: <code>dd/MM/yyyy</code> 
+          <br> Formato con hora: <code>dd/MM/yyyy hh:mm:ss</code>
+        </li>
+        <li><b>Codigo: </b>El código de identificación del artículo vendido</li>
+        <li><b>Descripcion: </b>Nombre o referencia del artículo vendido</li>
+        <li><b>Unidades: </b>Cantidad de unidades vendidas en ese evento.</li>
+        <li><b>Unitario Venta: </b>Precio unitario de venta. (El precio al que se vendió)</li>
+        <li><b>Ventas: </b>Total de las unidades por el precio unitario de venta de esa transacción.</li>
+        <li><b>Unitario Costo: </b>Precio unitario de costo de compra (en ese mes de ser posible).</li>
+        <li><b>Costos: </b>Total de las unidades por el costo de las unidades vendidas en esa transacción</li>
+      </ul>
+    </mat-step>
+
+    <!-- UPLOAD FILE -->
+    <mat-step aria-label="2" [stepControl]="firstStepCtrl">
+      <ng-template matStepLabel>Subir archivo</ng-template>
+      
+      <ul type="square">
+        <li>
+          <p>Asegúrate de que el archivo comience la primera fila con el nombre de las columnas. </p>
+          <div class="incorrect"> <i class="fas fa-times"></i> Incorrecto</div>
+          <div class="image-container">
+            <img [src]="'/assets/img/incorrect1.png'" [alt]="'Ejemplo incorrecto'">
+          </div> <br>
+          <div class="correct"> <i class="fas fa-check"></i> Correcto</div>
+          <div class="image-container">
+            <img [src]="'/assets/img/correct1.png'" [alt]="'Ejemplo correcto'">
+          </div>
+          <br>
+        </li>
+        <li>
+          <p>Realmente no importa si tiene columnas de más, pero no puede tener menos que las se solicitan en el paso anterior</p>
+          <br>
+        </li>
+        <li>
+          <p>Revisa que la configuración de los datos numéricos sea comas para los millares, y punto para los decimales.</p> <br>
+          <img [src]="'/assets/img/correct2.png'" [alt]="'Ejemplo correcto'">
+          <br>
+        </li>
+      </ul>
+      
+      <input
+        #file
+        type="file"
+        name="table"
+        id="table"
+        style="display: none"
+        (change)="catchFile($event)"
+      />
+
+    </mat-step>
+
+    <!-- RENAME COLUMNS -->
+    <mat-step aria-label="3">
+
+      <ng-template matStepLabel>Comparar columnas</ng-template>
+      <mat-list role="list">
+        <mat-list-item role="listitem"
+        *ngFor="let item of tables.requiredColumns"
+        >
+          <span class="reqcol">{{item}}</span>
+
+          <span class="selectcol">
+            <ng-container *ngIf="item | synonymHeader; else selectSynonim">
+              {{item | synonymHeader}}
+            </ng-container>
+            <ng-template #selectSynonim >
+              <app-header-selecter [requiredColumn]="item"
+              ></app-header-selecter>
+            </ng-template>
+          </span>
+
+        </mat-list-item>
+      </mat-list>
+
+    </mat-step>
+
+  </mat-horizontal-stepper>
+
 </mat-dialog-content>
-<mat-dialog-actions
-style="display: flex; justify-content: space-around;">
-    <button mat-raised-button
-    color="accent"
-    (click)="file.click()"
-    >Cargar Archivo</button>
-    <button mat-raised-button
-    color="primary"
-    [disabled]="!loadedFile"
-    (click)="upload()"
-    >Guardar</button>
+
+<mat-dialog-actions class="step-footer" *ngIf="stepper.selected">
+  <ng-container [ngSwitch]="stepper.selected.ariaLabel">
+    
+    <ng-container *ngSwitchCase="'1'">
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="stepper.next()">
+        Siguiente
+      </button>
+    </ng-container>
+
+      <ng-container *ngSwitchCase="'2'">
+        <button
+          mat-raised-button
+          color="accent"
+          (click)="file.click()">
+          Cargar Archivo
+        </button>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="'3'">
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="!tables.headerMapComplete"
+          (click)="createFile()"
+        >
+          Guardar
+        </button>
+      </ng-container>
+  </ng-container>
 </mat-dialog-actions>
-<input #file type="file" name="table" id="table" style="display: none" (change)="catchFile($event)">
+
