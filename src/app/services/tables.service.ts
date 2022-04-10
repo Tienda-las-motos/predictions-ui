@@ -24,6 +24,7 @@ export class TablesService {
   tableList$: Observable<ProductItemList[]>;
   tableLoaded$: Subject<any> = new Subject();
 
+  public prefix: string = 'Data registrada'
   public headerMap: Map<string, string> = new Map()
   public headerIndexMap: Map<string, number> = new Map()
   private csvRecordsArray: string[] = []
@@ -83,14 +84,18 @@ export class TablesService {
           
           this.unknownHeaders = [...this.fileHeaders]
           this.requiredColumns.forEach( header => {
-            let fileIndex = this.fileHeaders.indexOf( header )
+            let colFileIndex = this.fileHeaders.indexOf( header )
             
             if ( this.fileHeaders.includes( header ) ) {
               this.headerMap.set( header, header )
-              this.headerIndexMap.set( header, fileIndex )
-              this.unknownHeaders.splice(fileIndex, 1)
+              this.headerIndexMap.set( header, colFileIndex )
+              
+              let unknownColIndex = this.unknownHeaders.indexOf( header )
+              this.unknownHeaders.splice(unknownColIndex, 1)
             } 
-          })
+          } )
+          
+          // console.log( this.unknownHeaders, this.fileHeaders )
 
           resolve(this.fileHeaders)
         };
@@ -160,20 +165,24 @@ export class TablesService {
 
     } catch ( error ) {
       console.error(error);
-      
+      Swal.fire( {
+        'icon': 'error',
+        text: error.message
+      })
       throw error;
     }
   }
 
   private async quarryMargin(cells: string[], regist: any, rowIndex: number) {
     try {
-      let cost = +cells[ this.headerIndexMap.get( 'Total Costo' ) ]
+      let cost = +cells[ this.headerIndexMap.get( 'Costos' ) ]
       let sale = +cells[ this.headerIndexMap.get( 'Ventas' ) ]
-      let margin = sale - cost
+      let margin = parseFloat( (sale - cost).toFixed( 2 ) )
       let percent = ( margin / cost )
     
       regist[ 'Margen Monto' ] = margin
       regist[ 'Margen Porcentaje' ] = parseFloat( percent.toFixed( 2 ) )
+      // Margen Porcentaje'
     
       return regist
     } catch (error) {
@@ -195,6 +204,8 @@ export class TablesService {
         minute: 'numeric',
       } )
       
+      console.log( this.prefix )
+
       const ExportOptions = {
         fieldSeparator: ',',
         quoteStrings: '',
@@ -204,17 +215,14 @@ export class TablesService {
         useTextFile: false,
         useBom: true,
         useKeysAsHeaders: true,
-        filename: 'Data registrada: '+moment,
+        filename: `${this.prefix}: ${moment}` ,
         // headers: ['Column 1', 'Column 2', etc...] <-- Won't work with useKeysAsHeaders present!
       };
   
       const csvExporter = new ExportToCsv( ExportOptions );
-    
-      // csvExporter.generateCsv( registList )
-    
       const csv = csvExporter.generateCsv( list, true )
       const blob = new Blob( [ csv ], { "type": "text/csv;charset=utf8;" } );
-      const file = new File( [ blob ], 'Data registrada: ' + moment )
+      const file = new File( [ blob ], `${this.prefix}: ${moment}` )
       return file
     } catch (error) {
       console.error(error);
@@ -238,7 +246,8 @@ export class TablesService {
     return this._http
       .post(this.APIurl + '/file', formData, { headers: headers })
       .pipe(
-        map((response: ApiResponse) => {
+        map( ( response: ApiResponse ) => {
+          console.log( response )
           if (response.status === 201) {
             this._cache.updateData('currentTable', response.result);
           } else {

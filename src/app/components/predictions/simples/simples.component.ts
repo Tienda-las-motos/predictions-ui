@@ -61,44 +61,30 @@ export class SimplesComponent implements OnInit {
   }
 
 
-  makeRegression() {
+  async makeRegression() {
     var request: RegressionForm = {
       table: this.tableId, 
       product: this.productId, 
       months: this.months.value
     }
 
-    this._loading.toggleWaitingSpinner(true)
-    this._predictions.cantSalesProjection( request )
-      .subscribe( result => {
-        this._loading.toggleWaitingSpinner(false)
-        this.results.predicted_cant = result.predicted_cant
-        this.months.markAsPristine()
-      }, error => {
-          this._loading.toggleWaitingSpinner( false )
-          this._alert.sendError( 'Error en el servidor', error.message )
-          console.error(error.error)
-    })
+    // this._loading.toggleWaitingSpinner(true)
+    const {result} = await this._predictions.cantSalesProjection( request )
+    console.log( result )
+    this.results.predicted_cant = result.predicted_cant
+    this.months.markAsPristine()
   }
 
-  makeInverseReg() {
+  async makeInverseReg() {
     var request: InverseRegForm = {
       table: this.tableId, 
       product: this.productId, 
       cant: this.cant.value
     }
 
-    this._loading.toggleWaitingSpinner(true)
-    this._predictions.projectionByStats( request )
-      .subscribe( result => {
-        this._loading.toggleWaitingSpinner(false)
-        this.results.months_cant = result.months_cant
-        this.cant.markAsPristine()
-    }, error => {
-      this._loading.toggleWaitingSpinner( false )
-      this._alert.sendError( 'Error en el servidor', error.message )
-      console.error(error.error)
-    })
+    const {result} = await this._predictions.monthSalesProjection( request )
+    this.results.months_cant = result.months_cant
+    this.cant.markAsPristine()
   }
 
 }

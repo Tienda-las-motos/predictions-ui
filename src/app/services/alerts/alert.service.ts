@@ -32,7 +32,7 @@ export class AlertService {
             typeof message != 'string' ?  message :
                 new MessageAlertModel( message, 'mensaje' )
         
-        if (!msgModel.trueMsg) msgModel.trueMsg = 'aceptar'
+        if (!msgModel.trueMsg) msgModel.trueMsg = 'Aceptar'
 
         var dialog = this.dialog.open( AlertaPopupComponent, {
             minWidth: '450px',
@@ -52,8 +52,8 @@ export class AlertService {
             typeof request != 'string' ? request :
                 new MessageAlertModel(request, 'pregunta')
 
-        if (!preguntaModel.trueMsg) preguntaModel.trueMsg = 'aceptar'
-        if ( !preguntaModel.falseMsg ) preguntaModel.falseMsg = 'cancelar'
+        if (!preguntaModel.trueMsg) preguntaModel.trueMsg = 'Aceptar'
+        if ( !preguntaModel.falseMsg ) preguntaModel.falseMsg = 'Cancelar'
         
         var dialog = this.dialog.open( AlertaPopupComponent, {
             minWidth: '450px',

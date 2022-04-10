@@ -91,9 +91,11 @@ export class ProductsDrawerComponent implements OnInit {
   }
 
   selectProduct() {
-    this._loading.toggleWaitingSpinner(true);
+    this._loading.toggleWaitingSpinner( true );
+    let value = this.listControl.value
+    let codigo = typeof value === 'string' ? value : value.Codigo
     this.products_
-      .filterProduct(this.tableId, this.listControl.value.Codigo)
+      .filterProduct(this.tableId, codigo)
       .subscribe(
         (result: ProductModel) => {
           this._loading.toggleWaitingSpinner(false);

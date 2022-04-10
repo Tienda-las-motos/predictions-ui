@@ -18,7 +18,8 @@ export class UploadTableComponent implements OnInit {
   loadedFile: File;
 
   @ViewChild( 'stepper' ) stepper!: MatHorizontalStepper
-  firstStepCtrl: FormControl = new FormControl( null, [ Validators.required])
+  firstStepCtrl: FormControl = new FormControl( null, [ Validators.required ] )
+  
 
   constructor(
     private _loading: Loading,
